@@ -1,0 +1,116 @@
+Classes
+
+	Classe Máquina de Turing
+		- Classe Cabeçote
+		
+	Classe Fita (3x, fita X,Y,Z) //a fita tem infinitas células em ambas as direções
+		- Classe célula
+
+Funcionamento
+
+	4 tipos de comandos
+		- Comandos básicos de Computação
+		- Comandos de Aliases
+		- Comandos pra criação e chamadas de blocos
+		- Comandos especiais
+
+Características
+
+	- Não se marca o começo da fita, fita da MT padrão
+	- Entrada é na fita X
+	- Cabeçote é posicionado na posição [0] da cadeia w
+	- Estabelecido limite de computações, se este limite for ultrapassado, lançe estouro de pilha
+	- A simulação acaba quando houver computação indefinida, ou quando a MT recebe (pare, aceite ou rejeite)
+	- Um loop sempre determinará a próxima computação, sempre será determinista
+	- Se ; for o primeiro símbolo, o resto da linha é ignorado
+	
+Comandos
+
+	<estadoA> <fitaA> <simboloA> <movimentoA> -- <estadoB> <fitaB> <simboloB> <movimentoB>>
+	
+	Segue o significado dos termos apresentados na sintaxe do comando:
+	
+		<estadoA> – número do estado atual.
+		<fitaA> – identificador da fita de leitura, uma dentre X, Y ou Z.
+		<simbA> – símbolo encontrado no cabeçote da <fitaA>.
+		<moveA> – tipo de movimento executado na <fitaA> caso seja executada a instrução.
+		<estadoB> – número do novo estado caso seja executada a instrução.
+		<fitaB> – identificador da fita de escrita, uma dentre X, Y ou Z.
+		<simbB> – símbolo escrito no cabeçote de <fitaB> caso seja executada a instrução.
+		<moveA> – tipo de movimento executado na <fitaB> caso seja executada a instrução.
+	
+	Note que é possível examinar uma fita para determinar o que escrever em outra, isso confere maior liberdade para o programador sendo sua responsabilidade especificar computações que façam sentido.
+
+Cronologia de Computação
+	
+	. Leia simbolo da <fitaA>, atribuição <lido>
+	. <estadoA> ou <estadoB> int de 4 dígitos
+	. <simboloA> ou <simboloB> char (1), _ representa branco
+	. <movimentoA> e <movimentoB> move <fitaA> e <fitaB> respectivamente, ! representa ausência de movimento
+	
+	* pode ser usado como coringa em <simboloA> para denotar qualquer caractere.
+
+	* pode ser usado como coringa em <simboloB> e <estadoB> para significar ausência de mudança.
+
+	! pode ser usado no final da linha para criar um breakpoint. Durante a execução do programa, a máquina vai pausar automaticamente depois de computar uma linha com breakpoint e reabrir	o prompt para aguardar nova opção.
+
+Aliases
+
+    . Letra minúscula prefixada com dólar
+
+
+Criação e chamada de blocos
+
+    • Para iniciar um novo bloco a sintaxe é:
+        inicio <identificador de bloco> <estado inicial>
+
+    • Para finalizar um bloco a sintaxe é:
+        fim <identificador de bloco>
+
+    • Para chamar um bloco a sintaxe é:
+        <estado atual> <identificador de bloco> <estado de retorno>
+
+    • Os estados dentro de um bloco são independentes e não conflitam com estados de outros blocos,
+    isso define uma regra de escopo para os estados. A execução do bloco vai iniciar no estado inicial
+    fornecido na declaração.
+
+    • Para sair e retornar de um bloco utilize a instrução:
+        <estado atual> retorne
+
+        que vai devolver a execução para o bloco chamador, no estado de retorno fornecido na chamada.
+
+    • A execução do programa sempre inicia no bloco especial de nome “main”.
+
+Comandos especiais
+
+    • Para interromper uma execução, use a instrução:
+        <estado atual> pare
+
+    • Para interromper uma execução informando aceitação da entrada, use a instrução:
+        <estado atual> aceite
+
+    • Para interromper uma execução informando rejeição da entrada, use a instrução:
+        <estado atual> rejeite
+
+Chamada na linha de comando
+
+    simuladorMT <opções> <arquivo> <entrada>
+        com <arquivo> denotando o nome do arquivo (padrão *.mt) contendo o código do programa a ser simulado e
+        <entrada> denotando uma string fornecida como entrada para a execução do programa.
+
+    As <opções> podem ser:
+
+        • –step <n> Executa n computações e para, mostrando o conteúdo das três fitas, então reabre o prompt
+        para ler novo valor para <n> antes de continuar a simulação. Caso seja fornecidoo valor 0 para n a
+        simulação termina imediatamente, caso seja fornecido um valor negativo o programa considera a opção
+        –resume.
+
+        • –resume Executa o programa até o fim, mostra o conteúdo das três fitas e o resultado do reconhecimento:
+        ACEITA ou REJEITA. Essa é a opção padrão e será considerada se nenhuma opção –step for fornecida.
+
+        • –debug <arquivo log> A simulação produz um relatório mostrando por linha as instruções executadas, as
+        entradas e saídas dos blocos.
+
+        • –help Exibe mensagem explicando o formato da linha de comando.Para prevenir contra loops infinitos
+        (no caso das opções –resume), o simulador deve interromper a simulação depois da execução de 1000 computações,
+        e reabrir o prompt para a leitura de nova opção.
