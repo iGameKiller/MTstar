@@ -93,7 +93,7 @@ class Interface(object):
 
         elif linha[0] == 'fim':
             if self.__nomeBloco is None:
-                print('Error... comando inválido fim')
+                print('Erro... comando inválido fim')
                 raise SystemExit
 
             self.__nomeBloco = None
@@ -121,17 +121,15 @@ class Interface(object):
         inicial, lista = self.__dicBlocos[bloco]
 
         if tipo == 'final':
-            estadoA, ordem = linha # estado atual da máquina e a ordem recebida (aceitar, rejeitar ou retorne)
+            estadoA, ordem = linha # estado atual da máquina e a ordem recebida (aceita, rejeita ou retorne)
             comando = [tipo, estadoA, ordem]
 
         if tipo == 'chamada':
-            estado, alvo, retorno = linha
-            comando = [tipo, estado, alvo, retorno]
+            estInicial, idBlocoAlvo, estRetorno = linha
+            comando = [tipo, estInicial, idBlocoAlvo, estRetorno]
 
         if tipo == 'padrao':
             estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
             comando = [tipo, estadoA, fitaA, simbA, moveA, estadoB, fitaB, simbB, moveB]
 
         lista.append(comando)
-
-
