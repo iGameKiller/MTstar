@@ -1,4 +1,6 @@
 import argparse, sys
+import base64
+
 from memoria import Memoria as m
 
 
@@ -16,7 +18,7 @@ def linhaDeComando():
 
 
 class Interface(object):
-    msgHelp = 'Machine Turing Simulator, pau no cu dos alunos, com amor: Walace <3'
+    msgHelp = ''
 
     def __init__(self, arquivo, entrada, resume=True, debug=False, step=0):
         self._arquivo = arquivo
@@ -24,6 +26,7 @@ class Interface(object):
         self._resume = resume
         self._debug = debug
         self._step = step
+        self.aliases = []
 
     def entrada(self):
         nameSpace = dict()
@@ -49,7 +52,7 @@ class Interface(object):
 
     def _carregaArquivo(self):
         print('\n' + Interface.msgHelp)
-        print('\nprocessing ' + self._arquivo)
+        #print('\nprocessando' + self._arquivo) TODO: descomentar dps
 
         try:
             arquivo = open(self._arquivo).readlines()
@@ -85,6 +88,10 @@ class Interface(object):
         if linha[1] == '=' and len(linha) == 3:
             alias = linha[0]
             string = linha[2]
+            #type(int(string))
+            #print("ALias:", alias)
+
+            self.aliases.append((alias, string))
 
         if linha[0] == 'inicio' and len(linha) == 3:
             inicio, nomeBloco, estInicial = linha

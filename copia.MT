@@ -1,10 +1,11 @@
 ; copia inteiro na fita X, fornecido na entrada , para as fitas Y e Z
 
 $d = "0123456789"
+$e = "666"
 
 ; checa validade da entrada
 inicio main 01
-    01 X $d i -- 03 X $d i
+    01 X $d i -- 03 X $e i
     01 X * i -- 05 X * i
     03 copiaX 04
     04 aceita
