@@ -2,11 +2,11 @@ from interface import *
 from memoria import *
 
 
-class TuringMachine(object):
+class TuringMachine():
     maxPassosSemIntervencao = 1000
 
     def __init__(self, arquivo, entrada, resume=True, debug=False, step=0):
-        self.interface = Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("escreve.mt", 'Pedro', False, True, 0) # Interface(arquivo, entrada, resume, debug, step)
         self.memoria = Memoria()
         self.estado = None
         self.pilhaDeChamada = list()
@@ -56,7 +56,6 @@ class TuringMachine(object):
 
         for i in range(0, 1):
             comando = self.buscaComando()
-
             self.executaComando(comando)
 
 
@@ -74,11 +73,11 @@ class TuringMachine(object):
         fita2 = self.memoria.leFita2()
         fita3 = self.memoria.leFita3()
         inicial, comandos = self.blocos[bloco]
-        print("bloco atual:", bloco)
-        print("estado atual:", estado)
-        print("cabecote fita 1: ", self.memoria.leFita1())
-        print("cabecote fita 2: ", self.memoria.leFita2())
-        print("cabecote fita 3: ", self.memoria.leFita3())
+        # print("bloco atual:", bloco)
+        # print("estado atual:", estado)
+        # print("cabecote fita 1: ", self.memoria.leFita1())
+        # print("cabecote fita 2: ", self.memoria.leFita2())
+        # print("cabecote fita 3: ", self.memoria.leFita3())
 
         for c in comandos:
 
@@ -184,12 +183,12 @@ class TuringMachine(object):
 
 
 if __name__ == '__main__':
-    parametros = vars(linhaDeComando())
+    #parametros = vars(linhaDeComando())
 
     # print("Parâmetros passados: ", parametros)
 
-    MT = TuringMachine(**parametros)
+    MT = TuringMachine("escreve.mt", "Pedro")
     MT.carregaPrograma()
-    # print('blocos: ', MT.blocos)
+
 
     MT.executa()  # GOTO: linha 25
