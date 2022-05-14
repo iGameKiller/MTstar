@@ -5,8 +5,10 @@ from memoria import *
 class TuringMachine():
     maxPassosSemIntervencao = 1000
 
-    def __init__(self, arquivo, entrada, resume=True, debug=False, step=0):
-        self.interface = Interface("escreve.mt", 'Pedro', False, True, 0) # Interface(arquivo, entrada, resume, debug, step)
+    def __init__(self, arquivo, entrada,  head='()', resume=True, debug=False, step=0):
+        self.aceita = False
+        self.running = True
+        self.interface = Interface("anbn.mt", 'aabb', head, False, True, 0) # Interface(arquivo, entrada, resume, debug, step)
         self.memoria = Memoria()
         self.estado = None
         self.pilhaDeChamada = list()
@@ -23,7 +25,10 @@ class TuringMachine():
 
     def executa(self):
         self.memoria.carregaPalavra(self.entrada)
-        # print('\nexecutando...\n') TODO: Descomentar dps
+        print("Simulador de Máquina de Turing Suave versão 1.0")
+        print("Desenvolvido como trabalho prático para a disciplina de Teoria da Computação")
+        print("Autor: João Pedro Mendonça de Souza, IFMG − Formiga ,2022.")
+        print('\nexecutando...\n')
         self.chamada('main', None)
         self.run()
         return
@@ -42,23 +47,22 @@ class TuringMachine():
     def empilhaChamada(self, bloco, retorno):
 
         if retorno == 'retorne':
-            print('Error... double return to call %s' % bloco)
+            print('Erro... duplo retorno a chamada do bloco %s' % bloco)
             raise SystemExit
 
         self.pilhaDeChamada.append([bloco, retorno])
-        print("Pilha de chamada:", self.pilhaDeChamada)
 
     def run(self):
         self.resetaPassos()
-        self.running = True
-        self.aceita = False
-        #print("Aliases:", self.interface.aliases)  # Mostra os aliases do programa
-
-        for i in range(0, 1):
+        while self.running:
             comando = self.buscaComando()
             self.executaComando(comando)
 
-
+        if self.aceita:
+            self.memoria.dump()
+            print('\nACEITA.')
+        else:
+            print('\nREJEITA.')
 
     def resetaPassos(self):
         if self.step == 0:
@@ -67,22 +71,23 @@ class TuringMachine():
 
     def buscaComando(self):  # uma parte busca comando, a outra executa, esse busca
         bloco = self.blocoAtual()
-        # print("Bloco atual:", bloco)
         estado = self.estado
         fita1 = self.memoria.leFita1()
         fita2 = self.memoria.leFita2()
         fita3 = self.memoria.leFita3()
         inicial, comandos = self.blocos[bloco]
-        # print("bloco atual:", bloco)
-        # print("estado atual:", estado)
-        # print("cabecote fita 1: ", self.memoria.leFita1())
-        # print("cabecote fita 2: ", self.memoria.leFita2())
-        # print("cabecote fita 3: ", self.memoria.leFita3())
 
         for c in comandos:
+            state = c[1]  # estado igual primeira posição do vetor de comando
+            if state != estado:
+                continue
 
             tipo = c[0]
-            if tipo == 'padrao':
+            if tipo == 'fita1' and c[3] in (fita1, '*'):
+                return c
+            if tipo == 'fita2' and c[3] in (fita2, '*'):
+                return c
+            if tipo == 'fita3' and c[3] in (fita3, '*'):
                 return c
             elif tipo == 'chamada':
                 return c
@@ -96,65 +101,39 @@ class TuringMachine():
         if c is None:
             self.terminouExecucao(False)
 
-        parada = c[(-1)]
-        # c = c[0:-1]
-        # self._debuga(c, parada)
+        parada = False
+        self.debuga(c, parada)
         tipo = c[0]
-        if tipo == 'padrao':
 
-            t, estadoA, idFitaA, lidoA, direcaoA, estadoB, idFitaB, escritoB, direcaoB = c
-            print("Comando lido:", estadoA, idFitaA, lidoA, direcaoA, estadoB, idFitaB, escritoB, direcaoB)  # comando da vez
+        if tipo == 'fita1':
 
-            if idFitaB == 'X':
-                self.memoria.escreveFita1(escritoB)
-                self.memoria.moveFita1(direcaoB)
-            elif idFitaB == 'Y':
-                self.memoria.escreveFita2(escritoB)
-                self.memoria.moveFita2(direcaoB)
+            t, estadoIni, fitaLer, charLer, dirFitaLer, estadoAlvo, fitaEscrita, charEscrita, dirFitaEscrita = c
 
-            elif idFitaB == 'Z':
-                self.memoria.escreveFita3(escritoB)
-                self.memoria.moveFita3(direcaoB)
+            if charEscrita != '*': # se o novo caracter for diferente do coringa, escreve na fita o novo caracter
 
-            self.atualizaEstado(estadoB)
-            print("estado novo", self.estado)
+                if fitaEscrita == 'X':
+                    self.memoria.escreveFita1(charEscrita)
+                elif fitaEscrita == 'Y':
+                    self.memoria.escreveFita2(charEscrita)
+                elif fitaEscrita == 'Z':
+                    self.memoria.escreveFita3(charEscrita)
 
-            print("\n\nupdate fita 1: ", self.memoria.leFita1())
-            print("update fita 2: ", self.memoria.leFita2())
-            print("update fita 3: ", self.memoria.leFita3())
+            if fitaLer == 'X':
+                self.memoria.moveFita1(dirFitaLer)
+            elif fitaLer == 'Y':
+                self.memoria.moveFita2(dirFitaLer)
+            elif fitaLer == 'Z':
+                self.memoria.moveFita3(dirFitaLer)
 
-            # print(t, estadoA, idFitaA, lidoA, direcaoA, estadoB, idFitaB, escritoB, direcaoB)
-            # if escritoB != '*':  # se o novo caracter for diferente do coringa, escreve na fita o novo caracter
-
-            # if escritoB[0] == '$':
-            #     aliases = self.interface.aliases
-            #     print("EscritoB lido:", escritoB)
-            #     for a in range(len(aliases)):
-            #
-            #         if aliases[a][0] == escritoB:
-            #             print("Alias a ser escrito", aliases[a][0])
-            #             aliasAescrever = aliases[a][1]
-            #
-            #             aliasAescrever = aliasAescrever[1:-1]
-            #             aliasAescrever = str(aliasAescrever)
-            #             aliasAescrever = aliasAescrever.split()
-            #             print(aliasAescrever)
-            #             for w in aliasAescrever:
-            #                 print("w")
-            #                 self.memoria.escreveFita1(str(w))
-            #                 self.memoria.moveFita1("d")
-            #         #     print("alias a ser escrito:",aliasAescrever)
-            #
-            #     #for w in range(alias)
-
-            return
+            self.atualizaEstado(estadoAlvo)
 
         elif tipo == 'chamada':
             t, estadoIni, idBlocoAlvo, estadoRetorno = c
             self.chamada(idBlocoAlvo, estadoRetorno)
 
         elif tipo == 'final':
-            print("final")
+            tipo, estadoAlvo, comando = c
+            self.atualizaEstado(comando)
 
     def atualizaEstado(self, novoEstado):
 
@@ -177,18 +156,62 @@ class TuringMachine():
 
         return
 
-    def _terminouExecucao(self, aceita=False):
+    def terminouExecucao(self, aceita=False):
         self.aceita = aceita
         self.running = False
 
+    def debuga(self, c, parada):
+        interrompeu = False
+        while self.passos <= 0:
+            interrompeu = True
+            print(
+                '\nThis program executed %d steps.' % self._steps + '\nDo you want continue?' + '\nType an int for more n steps.' + '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao)
+            while True:
+                try:
+                    n = input('--> ')
+                except SyntaxError:
+                    n = -1
+                else:
+                    try:
+                        n = int(n)
+                    except ValueError:
+                        n = -1
+                    else:
+                        if 0 <= int(n) <= TuringMachine.maxPassosSemIntervencao:
+                            break
+
+            self.steps = self.passos = int(n)
+            if self.steps == 0:
+                self.terminouExecucao(False)
+                return
+
+        if parada and not interrompeu:
+            try:
+                input('\nBreakpoint... press [enter] to continue \n')
+            except SyntaxError:
+                pass
+
+        if not self.debug:
+            self.passos = int(self.passos) - 1
+            return
+        linha = ('{:0>3d} ').format(self.numComandoExecutado())
+        linha = linha + ('{:.>10}.').format(self.blocoAtual())
+        linha = linha + ('{:0>4d} : ').format(int(self.estado))
+        linha = linha + str(self.memoria)
+        print(linha, ' | ', c)
+        self.passos = int(self.passos) - 1
+
+    def numComandoExecutado(self):
+        n = self.step
+        if n == 0:
+            n = TuringMachine.maxPassosSemIntervencao
+        n = n - self.passos + 1
+        return n
 
 if __name__ == '__main__':
     #parametros = vars(linhaDeComando())
-
     # print("Parâmetros passados: ", parametros)
-
-    MT = TuringMachine("escreve.mt", "Pedro")
+    MT = TuringMachine("", "")
     MT.carregaPrograma()
-
-
     MT.executa()  # GOTO: linha 25
+    print("FIM DA SIMULAÇÃO")

@@ -1,8 +1,6 @@
 import argparse, sys
-import base64
 
 from memoria import Memoria as m
-
 
 def linhaDeComando():
     linha = sys.argv[1:]
@@ -20,7 +18,7 @@ def linhaDeComando():
 class Interface(object):
     msgHelp = ''
 
-    def __init__(self, arquivo, entrada, resume=True, debug=False, step=0):
+    def __init__(self, arquivo, entrada, head, resume=True, debug=False, step=0):
         self._arquivo = arquivo
         self._entrada = entrada
         self._resume = resume
@@ -52,8 +50,7 @@ class Interface(object):
 
     def _carregaArquivo(self):
         print('\n' + Interface.msgHelp)
-        #print('\nprocessando' + self._arquivo) TODO: descomentar dps
-
+        
         try:
             arquivo = open(self._arquivo).readlines()
             self.__nomeBloco = None
@@ -69,7 +66,7 @@ class Interface(object):
 
             if len(linha) > 0:
                 self._processaLinha(linha)  # depois de tratar, tem que ver o que a linha faz
-                #print(linha)
+                # print(linha)
 
         if self.__nomeBloco is not None:
             print('Erro... bloco %s não finalizado' % self.__nomeBloco)
@@ -88,8 +85,8 @@ class Interface(object):
         if linha[1] == '=' and len(linha) == 3:
             alias = linha[0]
             string = linha[2]
-            #type(int(string))
-            #print("ALias:", alias)
+            # type(int(string))
+            # print("ALias:", alias)
 
             self.aliases.append((alias, string))
 
@@ -112,7 +109,12 @@ class Interface(object):
             self._novoComando(self.__nomeBloco, 'chamada', linha)
 
         elif self._temEstado(linha) and len(linha) == 9:
-            self._novoComando(self.__nomeBloco, 'padrao', linha)
+            if linha[1] == 'X':
+                self._novoComando(self.__nomeBloco, 'fita1', linha)
+            elif linha[1] == 'Y':
+                self._novoComando(self.__nomeBloco, 'fita2', linha)
+            elif linha[1] == 'Z':
+                self._novoComando(self.__nomeBloco, 'fita3', linha)
 
     def _temEstado(self, linha):
         n = linha[0]
@@ -128,15 +130,23 @@ class Interface(object):
         inicial, lista = self.__dicBlocos[bloco]
 
         if tipo == 'final':
-            estadoA, ordem = linha # estado atual da máquina e a ordem recebida (aceita, rejeita ou retorne)
+            estadoA, ordem = linha  # estado atual da máquina e a ordem recebida (aceita, rejeita ou retorne)
             comando = [tipo, estadoA, ordem]
 
         if tipo == 'chamada':
             estInicial, idBlocoAlvo, estRetorno = linha
             comando = [tipo, estInicial, idBlocoAlvo, estRetorno]
 
-        if tipo == 'padrao':
+        if tipo == 'fita1':
             estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
-            comando = [tipo, estadoA, fitaA, simbA, moveA, estadoB, fitaB, simbB, moveB]
+            comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
+
+        if tipo == 'fita2':
+            estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
+            comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
+
+        if tipo == 'fita3':
+            estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
+            comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
 
         lista.append(comando)

@@ -6,3 +6,5 @@ inicio main 01
     05 X O D -- 06 Z O D
     06 aceita
 fim main
+
+
