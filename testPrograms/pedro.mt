@@ -1,20 +1,21 @@
+; Copia a string "pedro" para as duas outras fitas
+
 inicio main 01
-    01 X p D -- 02 Y p D
-    02 Y p D -- 03 Z p D
 
-    03 X e D -- 04 Y e D
-    04 Y e D -- 04 Z e D
+    01 X p D -- 02 Y p I
+    01 X e D -- 02 Y e I
+    01 X d D -- 02 Y d I
+    01 X r D -- 02 Y r I
+    01 X o D -- 02 Y o I
 
-    04 X d D -- 05 Y d D
-    05 Y d D -- 06 Z d D
+    02 Y p D -- 01 Z p D
+    02 Y e D -- 01 Z e D
+    02 Y d D -- 01 Z d D
+    02 Y r D -- 01 Z r D
+    02 Y o D -- 03 Z o D
 
-    06 X r D -- 07 Y r D
-    07 Y r D -- 08 Z r D
+    03 aceite
 
-    08 X o D -- 09 Y o D
-    09 Y o D -- 10 Z o D
-
-    10 aceite
 fim main
 
 

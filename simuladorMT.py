@@ -9,7 +9,7 @@ class TuringMachine():
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/escreve.mt", 'pedro', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/pedro.mt", 'pedro', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -128,15 +128,15 @@ class TuringMachine():
 
             if fitaLer == 'X':
                 if fitaEscrita != 'X':
-                    self.memoriaX.moveFita1(dirFitaEscrita)
+                    self.memoriaX.moveFita1(dirFitaLer)
 
             elif fitaLer == 'Y':
                 if fitaEscrita != 'Y':
-                    self.memoriaY.moveFita1(dirFitaEscrita)
+                    self.memoriaY.moveFita1(dirFitaLer)
 
             elif fitaLer == 'Z':
                 if fitaEscrita != 'Z':
-                    self.memoriaZ.moveFita1(dirFitaEscrita)
+                    self.memoriaZ.moveFita1(dirFitaLer)
 
             self.atualizaEstado(estadoAlvo)
 
@@ -257,6 +257,5 @@ if __name__ == '__main__':
     print("FIM DA SIMULAÇÃO")
 
     # TODO: Criar Aliases
-    # TODO: Rastrear a interface buscando fitas Y e Z
     # TODO: Fornecer um log de saída contendo os estados computados
     # TODO: Testar código.MT que utiliza chamadas de função
