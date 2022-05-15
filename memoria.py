@@ -58,8 +58,6 @@ class Memoria(object):
         self.escreveFita1(simbolo)
         self.moveFita1(dir)
 
-    ############################################
-
     def _head(self):
         str = self._marcadores
         msg = str[0] + self._cabecote1.replace(' ', Memoria.simboloBranco) + str[1]
@@ -85,5 +83,5 @@ class Memoria(object):
         return linha
 
     def dump(self):
-        linha = self._left(40) + self._head() + self._right(40)
+        linha = self._left(20) + self._head() + self._right(20)
         print(self._nome, ':', linha)

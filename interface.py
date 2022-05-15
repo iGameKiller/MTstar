@@ -1,4 +1,5 @@
-import argparse, sys
+import argparse
+import sys
 
 from memoria import Memoria as m
 
@@ -41,9 +42,9 @@ class Interface(object):
         return nameSpace
 
     def _trataLinha(self, linha):
-        pos = linha.find(';')  # Quando o primeiro caracter da linha for 0, é porque ; é a primeira posição
+        pos = linha.find(';')       # Quando o primeiro caracter da linha for 0, é porque ; é a primeira posição
 
-        if pos != -1:  # Se por for -1, então a linha é neutralizada
+        if pos != -1:               # Se por for -1, então a linha é neutralizada
             linha = linha[:pos]
 
         linha = linha.split()

@@ -1,6 +1,7 @@
 ; Programa reconhecedor da linguagem anbn
 ; Tupla de busca de comando: <estIni> <fitaLeitura> <simboloLeitura> <direcaoFitaLeitura>
 ; Tupla de execução de comando: <estAlvo> <fitaAlvo> <simboloEscrita> <direcaoFitaEscrita
+; Este programa utiliza apenas uma fita
 
 inicio main 01
 

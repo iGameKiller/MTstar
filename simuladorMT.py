@@ -9,7 +9,7 @@ class TuringMachine():
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/pedro.mt", 'pedro', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/pedro.MT", 'pedro', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -74,7 +74,7 @@ class TuringMachine():
             self.step = TuringMachine.maxPassosSemIntervencao
         self.passos = self.step
 
-    def buscaComando(self):  # uma parte busca comando, a outra executa, esse busca
+    def buscaComando(self):                 # uma parte busca comando, a outra executa, esse busca
         bloco = self.blocoAtual()
         estado = self.estado
         fita1 = self.memoriaX.leFita1()
@@ -83,7 +83,7 @@ class TuringMachine():
         inicial, comandos = self.blocos[bloco]
 
         for c in comandos:
-            state = c[1]  # estado igual primeira posição do vetor de comando
+            state = c[1]                    # estado igual primeira posição do vetor de comando
             if state != estado:
                 continue
 
@@ -99,8 +99,8 @@ class TuringMachine():
             elif tipo == 'final':
                 return c
 
-    def blocoAtual(self):  # bloco atual é sempre a ultima posição da pilha de chamada
-        return self.pilhaDeChamada[(-1)][0]  # primeira posição da ultima chamada de bloco
+    def blocoAtual(self):                   # bloco atual é sempre a ultima posição da pilha de chamada
+        return self.pilhaDeChamada[(-1)][0] # primeira posição da ultima chamada de bloco
 
     def executaComando(self, c):
         if c is None:
@@ -166,7 +166,6 @@ class TuringMachine():
             self.terminouExecucao(False)
 
         else:
-
             self.estado = novoEstado
 
         return
@@ -208,7 +207,7 @@ class TuringMachine():
 
         if parada and not interrompeu:
             try:
-                input('\nBreakpoint... press [enter] to continue \n')
+                input('\nBreakpoint... pressione [enter] para continuar \n')
             except SyntaxError:
                 pass
 
@@ -216,22 +215,13 @@ class TuringMachine():
             self.passos = int(self.passos) - 1
             return
 
-        linhaX = '{:0>3d} '.format(self.numComandoExecutado())
-        linhaX = linhaX + 'Fita X'
-        linhaX = linhaX + '{:.>15}.'.format(self.blocoAtual())
-        linhaX = linhaX + '{:0>4d} : '.format(int(self.estado))
+        linhaX = self.montaLinha()
         linhaX = linhaX + str(self.memoriaX)
 
-        linhaY = '{:0>3d} '.format(self.numComandoExecutado())
-        linhaY = linhaY + 'Fita Y'
-        linhaY = linhaY + '{:.>15}.'.format(self.blocoAtual())
-        linhaY = linhaY + '{:0>4d} : '.format(int(self.estado))
+        linhaY = self.montaLinha()
         linhaY = linhaY + str(self.memoriaY)
 
-        linhaZ = '{:0>3d} '.format(self.numComandoExecutado())
-        linhaZ = linhaZ + 'Fita Z'
-        linhaZ = linhaZ + '{:.>15}.'.format(self.blocoAtual())
-        linhaZ = linhaZ + '{:0>4d} : '.format(int(self.estado))
+        linhaZ = self.montaLinha()
         linhaZ = linhaZ + str(self.memoriaZ)
 
         print(linhaX, ' | ', c)
@@ -247,6 +237,12 @@ class TuringMachine():
         n = n - self.passos + 1
         return n
 
+    def montaLinha(self):
+        linha = '{:0>3d} '.format(self.numComandoExecutado())
+        linha = linha + 'Fita X'
+        linha = linha + '{:.>15}.'.format(self.blocoAtual())
+        linha = linha + '{:0>4d} : '.format(int(self.estado))
+        return linha
 
 if __name__ == '__main__':
     # parametros = vars(linhaDeComando())    # Requisito 4
