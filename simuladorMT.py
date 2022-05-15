@@ -5,11 +5,14 @@ from memoria import *
 class TuringMachine():
     maxPassosSemIntervencao = 1000
 
-    def __init__(self, arquivo, entrada,  head='()', resume=True, debug=False, step=0):
+    def __init__(self, arquivo, entrada, head='()', resume=True, debug=False, step=0):
+        self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("anbn.mt", 'aabb', head, False, True, 0) # Interface(arquivo, entrada, resume, debug, step)
-        self.memoria = Memoria()
+        self.interface = Interface("./testPrograms/escreve.mt", 'pedro', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.memoriaX = Memoria('Fita X')
+        self.memoriaY = Memoria('Fita Y')
+        self.memoriaZ = Memoria('Fita Z')
         self.estado = None
         self.pilhaDeChamada = list()
         self.blocos = None
@@ -24,10 +27,10 @@ class TuringMachine():
         self.blocos = carga['blocos']
 
     def executa(self):
-        self.memoria.carregaPalavra(self.entrada)
+        self.memoriaX.carregaPalavra(self.entrada)
         print("Simulador de Máquina de Turing Suave versão 1.0")
         print("Desenvolvido como trabalho prático para a disciplina de Teoria da Computação")
-        print("Autor: João Pedro Mendonça de Souza, IFMG − Formiga ,2022.")
+        print("Autor: João Pedro Mendonça de Souza, IFMG − Formiga, 2022.")
         print('\nexecutando...\n')
         self.chamada('main', None)
         self.run()
@@ -59,7 +62,9 @@ class TuringMachine():
             self.executaComando(comando)
 
         if self.aceita:
-            self.memoria.dump()
+            self.memoriaX.dump()
+            self.memoriaY.dump()
+            self.memoriaZ.dump()
             print('\nACEITA.')
         else:
             print('\nREJEITA.')
@@ -72,9 +77,9 @@ class TuringMachine():
     def buscaComando(self):  # uma parte busca comando, a outra executa, esse busca
         bloco = self.blocoAtual()
         estado = self.estado
-        fita1 = self.memoria.leFita1()
-        fita2 = self.memoria.leFita2()
-        fita3 = self.memoria.leFita3()
+        fita1 = self.memoriaX.leFita1()
+        fita2 = self.memoriaY.leFita1()
+        fita3 = self.memoriaZ.leFita1()
         inicial, comandos = self.blocos[bloco]
 
         for c in comandos:
@@ -105,25 +110,33 @@ class TuringMachine():
         self.debuga(c, parada)
         tipo = c[0]
 
-        if tipo == 'fita1':
+        if tipo == 'fita1' or tipo == 'fita2' or tipo == 'fita3':
 
             t, estadoIni, fitaLer, charLer, dirFitaLer, estadoAlvo, fitaEscrita, charEscrita, dirFitaEscrita = c
 
-            if charEscrita != '*': # se o novo caracter for diferente do coringa, escreve na fita o novo caracter
+            if charEscrita != '*':  # se o novo caracter for diferente do coringa, escreve na fita o novo caracter
 
                 if fitaEscrita == 'X':
-                    self.memoria.escreveFita1(charEscrita)
+                    self.memoriaX.escreveFita1(charEscrita)
+                    self.memoriaX.moveFita1(dirFitaEscrita)
                 elif fitaEscrita == 'Y':
-                    self.memoria.escreveFita2(charEscrita)
+                    self.memoriaY.escreveFita1(charEscrita)
+                    self.memoriaY.moveFita1(dirFitaEscrita)
                 elif fitaEscrita == 'Z':
-                    self.memoria.escreveFita3(charEscrita)
+                    self.memoriaZ.escreveFita1(charEscrita)
+                    self.memoriaZ.moveFita1(dirFitaEscrita)
 
             if fitaLer == 'X':
-                self.memoria.moveFita1(dirFitaLer)
+                if fitaEscrita != 'X':
+                    self.memoriaX.moveFita1(dirFitaEscrita)
+
             elif fitaLer == 'Y':
-                self.memoria.moveFita2(dirFitaLer)
+                if fitaEscrita != 'Y':
+                    self.memoriaY.moveFita1(dirFitaEscrita)
+
             elif fitaLer == 'Z':
-                self.memoria.moveFita3(dirFitaLer)
+                if fitaEscrita != 'Z':
+                    self.memoriaZ.moveFita1(dirFitaEscrita)
 
             self.atualizaEstado(estadoAlvo)
 
@@ -134,6 +147,7 @@ class TuringMachine():
         elif tipo == 'final':
             tipo, estadoAlvo, comando = c
             self.atualizaEstado(comando)
+
 
     def atualizaEstado(self, novoEstado):
 
@@ -152,6 +166,7 @@ class TuringMachine():
             self.terminouExecucao(False)
 
         else:
+
             self.estado = novoEstado
 
         return
@@ -164,8 +179,14 @@ class TuringMachine():
         interrompeu = False
         while self.passos <= 0:
             interrompeu = True
+
             print(
-                '\nThis program executed %d steps.' % self._steps + '\nDo you want continue?' + '\nType an int for more n steps.' + '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao)
+                '\nEste programa executou %d computações.' % self._steps +
+                '\nDeseja continuar?' +
+                '\nDigite um inteiro para mais n passos.' +
+                '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao
+            )
+
             while True:
                 try:
                     n = input('--> ')
@@ -194,11 +215,29 @@ class TuringMachine():
         if not self.debug:
             self.passos = int(self.passos) - 1
             return
-        linha = ('{:0>3d} ').format(self.numComandoExecutado())
-        linha = linha + ('{:.>10}.').format(self.blocoAtual())
-        linha = linha + ('{:0>4d} : ').format(int(self.estado))
-        linha = linha + str(self.memoria)
-        print(linha, ' | ', c)
+
+        linhaX = '{:0>3d} '.format(self.numComandoExecutado())
+        linhaX = linhaX + 'Fita X'
+        linhaX = linhaX + '{:.>15}.'.format(self.blocoAtual())
+        linhaX = linhaX + '{:0>4d} : '.format(int(self.estado))
+        linhaX = linhaX + str(self.memoriaX)
+
+        linhaY = '{:0>3d} '.format(self.numComandoExecutado())
+        linhaY = linhaY + 'Fita Y'
+        linhaY = linhaY + '{:.>15}.'.format(self.blocoAtual())
+        linhaY = linhaY + '{:0>4d} : '.format(int(self.estado))
+        linhaY = linhaY + str(self.memoriaY)
+
+        linhaZ = '{:0>3d} '.format(self.numComandoExecutado())
+        linhaZ = linhaZ + 'Fita Z'
+        linhaZ = linhaZ + '{:.>15}.'.format(self.blocoAtual())
+        linhaZ = linhaZ + '{:0>4d} : '.format(int(self.estado))
+        linhaZ = linhaZ + str(self.memoriaZ)
+
+        print(linhaX, ' | ', c)
+        print(linhaY, ' |')
+        print(linhaZ, ' | \n')
+
         self.passos = int(self.passos) - 1
 
     def numComandoExecutado(self):
@@ -208,10 +247,16 @@ class TuringMachine():
         n = n - self.passos + 1
         return n
 
+
 if __name__ == '__main__':
-    #parametros = vars(linhaDeComando())
+    # parametros = vars(linhaDeComando())    # Requisito 4
     # print("Parâmetros passados: ", parametros)
     MT = TuringMachine("", "")
     MT.carregaPrograma()
-    MT.executa()  # GOTO: linha 25
+    MT.executa()
     print("FIM DA SIMULAÇÃO")
+
+    # TODO: Criar Aliases
+    # TODO: Rastrear a interface buscando fitas Y e Z
+    # TODO: Fornecer um log de saída contendo os estados computados
+    # TODO: Testar código.MT que utiliza chamadas de função

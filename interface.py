@@ -2,6 +2,7 @@ import argparse, sys
 
 from memoria import Memoria as m
 
+
 def linhaDeComando():
     linha = sys.argv[1:]
     parser = argparse.ArgumentParser(prog='simuladorMT', description=Interface.msgHelp)
@@ -18,18 +19,20 @@ def linhaDeComando():
 class Interface(object):
     msgHelp = ''
 
-    def __init__(self, arquivo, entrada, head, resume=True, debug=False, step=0):
+    def __init__(self, arquivo, entrada, head='[]', resume=True, debug=False, step=0):
         self._arquivo = arquivo
         self._entrada = entrada
         self._resume = resume
         self._debug = debug
         self._step = step
+        self._head = head
         self.aliases = []
 
     def entrada(self):
         nameSpace = dict()
         nameSpace['arquivo'] = self._arquivo
         nameSpace['entrada'] = self._entrada
+        nameSpace['head'] = self._head
         nameSpace['resume'] = self._resume
         nameSpace['debug'] = self._debug
         nameSpace['step'] = self._step
@@ -38,9 +41,7 @@ class Interface(object):
         return nameSpace
 
     def _trataLinha(self, linha):
-        self.numLinha += 1
-        pos = linha.find(';')
-        # Quando o primeiro caracter da linha for 0, é porque ; é a primeira posição
+        pos = linha.find(';')  # Quando o primeiro caracter da linha for 0, é porque ; é a primeira posição
 
         if pos != -1:  # Se por for -1, então a linha é neutralizada
             linha = linha[:pos]
@@ -50,12 +51,11 @@ class Interface(object):
 
     def _carregaArquivo(self):
         print('\n' + Interface.msgHelp)
-        
+
         try:
             arquivo = open(self._arquivo).readlines()
             self.__nomeBloco = None
             self.__dicBlocos = dict()
-            self.numLinha = -1  # inicializa contagem do marcador de linhas, essa variável n tem outra utilidade
         except:
             print('Erro...  %s é um arquivo inválido' % self._arquivo)
             raise SystemExit
@@ -66,7 +66,6 @@ class Interface(object):
 
             if len(linha) > 0:
                 self._processaLinha(linha)  # depois de tratar, tem que ver o que a linha faz
-                # print(linha)
 
         if self.__nomeBloco is not None:
             print('Erro... bloco %s não finalizado' % self.__nomeBloco)
@@ -74,7 +73,7 @@ class Interface(object):
 
         return self.__dicBlocos
 
-    def _processaLinha(self, linha):
+    def _processaLinha(self, linha):  # Requisito 2.1, 2.3 e 2.4
 
         if linha[(-1)] == '!':
             parada = True
@@ -85,8 +84,6 @@ class Interface(object):
         if linha[1] == '=' and len(linha) == 3:
             alias = linha[0]
             string = linha[2]
-            # type(int(string))
-            # print("ALias:", alias)
 
             self.aliases.append((alias, string))
 
@@ -150,3 +147,10 @@ class Interface(object):
             comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
 
         lista.append(comando)
+
+    def _carFita2(self, simbolo):
+        if len(simbolo) != 3:
+            return False
+        if simbolo[0] == '[' and simbolo[2] == ']':
+            return True
+        return False

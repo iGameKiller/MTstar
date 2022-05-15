@@ -4,13 +4,13 @@
 
 inicio main 01
 
-    ;   Estado 1
+    ; Estado 1
     01 X a d -- 02 X x d
     01 X b i -- 05 X * i
     01 X y i -- 06 X y i
     01 X _ i -- 05 X * i
 
-    ;   Estado 2
+    ; Estado 2
     02 X a d -- 02 X a d
     02 X b d -- 02 X b d
     02 X _ e -- 03 X _ e
