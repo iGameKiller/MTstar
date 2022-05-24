@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/pedro.MT", 'pedro', head, False, True,0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/teste.mt", 'ab.', head, False, True,0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -130,6 +130,14 @@ class TuringMachine:
                     self.memoriaY.moveFita1(dirFitaEscrita)
                 elif fitaEscrita == 'Z':
                     self.memoriaZ.escreveFita1(charEscrita)
+                    self.memoriaZ.moveFita1(dirFitaEscrita)
+
+            elif charEscrita == '*':
+                if fitaEscrita == 'X':
+                    self.memoriaX.moveFita1(dirFitaEscrita)
+                elif fitaEscrita == 'Y':
+                    self.memoriaY.moveFita1(dirFitaEscrita)
+                elif fitaEscrita == 'Z':
                     self.memoriaZ.moveFita1(dirFitaEscrita)
 
             if fitaLer == 'X' and fitaEscrita != 'X':
