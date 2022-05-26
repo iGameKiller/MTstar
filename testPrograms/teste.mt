@@ -97,6 +97,7 @@ fim fazCopia
 ;   move ate #
 ;
 inicio voltaRef 1
-	1 retorne
+    1 X # i -- 2 X * i
 	1 X * e -- 1 X * e
+	2 retorne
 fim voltaRef
