@@ -104,16 +104,30 @@ class Interface(object):
             self._novoComando(self.__nomeBloco, 'final', linha)
 
         if self._temEstado(linha) and len(linha) == 3:
-            self._novoComando(self.__nomeBloco, 'chamada', linha)
+            if linha[1] == 'copiar':
+                self._novoComando(self.__nomeBloco, 'copiar', linha)
+            elif linha[1] == 'colar':
+                self._novoComando(self.__nomeBloco, 'colar', linha)
+            else:
+                self._novoComando(self.__nomeBloco, 'chamada', linha)
+
+        if linha[1] == 'gravar' and len(linha) == 4:
+            self._novoComando(self.__nomeBloco, 'gravar', linha)
 
         elif self._temEstado(linha) and len(linha) == 9:
+
             if linha[1] == 'X':
-                self._novoComando(self.__nomeBloco, 'fita1', linha)
-            elif linha[1] == 'Y':
+                if len(linha[2]) == 1:
+                    self._novoComando(self.__nomeBloco, 'fita1', linha)
+                if self._carFita2(linha[2]):
+                    self._novoComando(self.__nomeBloco, 'fitaEspecial', linha)
+            elif linha[1] == 'Y' and self._carFita2(linha[2]):
                 self._novoComando(self.__nomeBloco, 'fita2', linha)
             elif linha[1] == 'Z':
                 self._novoComando(self.__nomeBloco, 'fita3', linha)
-
+            else:
+                print('Error... ill-formed command: %s' % linha)
+            return
     def _temEstado(self, linha):
         n = linha[0]
         try:
@@ -139,6 +153,10 @@ class Interface(object):
             estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
             comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
 
+        if tipo == 'fitaEspecial':
+            estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
+            comando = [tipo, estadoA, fitaA, m.cb(simbA[1]), moveA, estadoB, fitaB, m.cb(simbB), moveB]
+
         if tipo == 'fita2':
             estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
             comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
@@ -146,6 +164,18 @@ class Interface(object):
         if tipo == 'fita3':
             estadoA, fitaA, simbA, moveA, separador, estadoB, fitaB, simbB, moveB = linha
             comando = [tipo, estadoA, fitaA, m.cb(simbA), moveA, estadoB, fitaB, m.cb(simbB), moveB]
+
+        if tipo == 'colar':
+            estInicial, comando, estRetorno = linha
+            comando = [tipo, estInicial, comando, estRetorno]
+
+        elif tipo == 'copiar':
+            estInicial, comando, estRetorno = linha
+            comando = [tipo, estInicial, comando, estRetorno]
+
+        elif tipo == 'gravar':
+            estado, str, car, alvo = linha
+            comando = [estado, tipo, car, alvo]
 
         lista.append(comando)
 

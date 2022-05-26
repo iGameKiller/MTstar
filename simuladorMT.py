@@ -57,6 +57,9 @@ class TuringMachine:
 
         self.pilhaDeChamada.append([bloco, retorno])
 
+    def desempilhaChamada(self):
+        self.pilhaDeChamada = self.pilhaDeChamada[0:-1]
+
     def run(self):
 
         self.resetaPassos()
@@ -84,6 +87,7 @@ class TuringMachine:
         bloco = self.blocoAtual()
         estado = self.estado
         fita1 = self.memoriaX.leFita1()
+        fitaEspecial = self.memoriaX.leFita2()
         fita2 = self.memoriaY.leFita1()
         fita3 = self.memoriaZ.leFita1()
         inicial, comandos = self.blocos[bloco]
@@ -100,9 +104,17 @@ class TuringMachine:
                 return c
             if tipo == 'fita3' and c[3] in (fita3, '*'):
                 return c
-            elif tipo == 'chamada':
+            if tipo == 'fitaEspecial' and c[3] in (fitaEspecial, '*'):
                 return c
-            elif tipo == 'final':
+            if tipo == 'chamada':
+                return c
+            if tipo == 'final':
+                return c
+            if tipo == 'colar':
+                return c
+            if tipo == 'copiar':
+                return c
+            if tipo == 'gravar':
                 return c
 
     def blocoAtual(self):  # bloco atual é sempre a ultima posição da pilha de chamada
@@ -150,6 +162,13 @@ class TuringMachine:
                 self.memoriaZ.moveFita1(dirFitaLer)
 
             self.atualizaEstado(estadoAlvo)
+        elif tipo == 'fitaEspecial':
+            t, estadoIni, fitaLer, charLer, dirFitaLer, estadoAlvo, fitaEscrita, charEscrita, dirFitaEscrita = c
+            if charEscrita != '*':  # se o novo caracter for coringa, não escreve nada
+                self.memoriaX.escreveFita1(charEscrita)
+
+            self.memoriaX.moveFita1(dirFitaEscrita)
+            self.atualizaEstado(estadoAlvo)
 
         elif tipo == 'chamada':
             t, estadoIni, idBlocoAlvo, estadoRetorno = c
@@ -158,6 +177,23 @@ class TuringMachine:
         elif tipo == 'final':
             tipo, estadoAlvo, comando = c
             self.atualizaEstado(comando)
+
+        if tipo == 'colar':
+            estado, tipo, alvo = c
+            car = self.memoriaX.leFita2()
+            self.memoriaX.escreveFita1(car)
+            self.atualizaEstado(alvo)
+
+        elif tipo == 'copiar':
+            tipo, estadoIni, comando, estadoRetorno = c
+            car = self.memoriaX.leFita1()
+            self.memoriaX.escreveFita2(car)
+            self.atualizaEstado(estadoRetorno)
+
+        elif tipo == 'gravar':
+            estado, tipo, car, alvo = c
+            self.memoriaX.escreveFita2(car)
+            self.atualizaEstado(alvo)
 
     def atualizaEstado(self, novoEstado):
 

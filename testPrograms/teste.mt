@@ -21,8 +21,9 @@ inicio acertaBrancos 1
 	1 X _ d -- 1 X ~ d
 	1 X * d -- 1 X * d
 	5 X * e -- 10 X * e
-	10 retorne
+	10 X _ d -- 11 X * d
 	10 X * e -- 10 X * e
+	11 retorne
 fim acertaBrancos
 
 ;------------------------
@@ -63,7 +64,8 @@ inicio clonaCar 1
 	5 X * d -- 5 X * d
     10 fazCopia 15
     15 voltaRef 20
-    20 retorne
+    20 X # i -- 21 X # d
+    21 retorne
 fim clonaCar
 
 	
