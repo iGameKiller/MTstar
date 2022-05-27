@@ -42,7 +42,8 @@ inicio restauraBrancos 1
 	6 X _ d -- 8 X * d
 	6 X ~ e -- 6 X _ e
 	6 X * e -- 6 X * e
-	8 X * d -- 9 X * d
+	8 X . i -- 9 X . i
+	8 X * d -- 8 X * d
 	9 retorne
 fim restauraBrancos
 
