@@ -42,8 +42,8 @@ inicio restauraBrancos 1
 	6 X _ d -- 8 X * d
 	6 X ~ e -- 6 X _ e
 	6 X * e -- 6 X * e
-	8 retorne
-	8 X * d -- 8 X * d
+	8 X * d -- 9 X * d
+	9 retorne
 fim restauraBrancos
 
 ;------------------------
@@ -64,7 +64,7 @@ inicio clonaCar 1
 	5 X * d -- 5 X * d
     10 fazCopia 15
     15 voltaRef 20
-    20 X # i -- 21 X # d
+    20 X # i -- 21 X # i
     21 retorne
 fim clonaCar
 
@@ -86,8 +86,9 @@ inicio fazCopia 1
 	1 X [I] i -- 10 X 3 i
 	1 X [O] i -- 10 X 4 i
 	1 X [U] i -- 10 X 5 i
-    1 colar 10
-	10 retorne
+	1 colar 10
+    10 X * i -- 11 X * i
+	11 retorne
 fim fazCopia
 
 ;------------------------

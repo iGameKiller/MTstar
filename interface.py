@@ -121,7 +121,7 @@ class Interface(object):
                     self._novoComando(self.__nomeBloco, 'fita1', linha)
                 if self._carFita2(linha[2]):
                     self._novoComando(self.__nomeBloco, 'fitaEspecial', linha)
-            elif linha[1] == 'Y' and self._carFita2(linha[2]):
+            elif linha[1] == 'Y':
                 self._novoComando(self.__nomeBloco, 'fita2', linha)
             elif linha[1] == 'Z':
                 self._novoComando(self.__nomeBloco, 'fita3', linha)
