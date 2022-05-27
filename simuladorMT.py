@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/teste.mt", 'exemplo.', head, False, True,0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/pedro.mt", 'pedro', head, False, True,0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
