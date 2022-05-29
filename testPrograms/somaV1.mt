@@ -317,8 +317,9 @@ fim encontra_operacao
 	
 ;bloco para mover ate o =
 inicio move_ate_igual 1
-	1 retorne
+	1 X = d -- 2 X * i
 	1 X * d -- 1 X * d
+	2 retorne
 fim move_ate_igual
 
 	
@@ -365,9 +366,9 @@ inicio insere_depois_igual 1
     16 colar 20
     20 move_inicio 25
     25 procura_numero 30
-	30 X + d -- 31 X * i
-	30 X - d -- 31 X * i
-	30 X x d -- 31 X * i
+	30 X + d -- 31 X * d
+	30 X - d -- 31 X * d
+	30 X x d -- 31 X * d
 	30 X * i -- 1 X * i
 	31 retorne
 fim insere_depois_igual
