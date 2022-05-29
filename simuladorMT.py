@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/somaV1.mt", '20+20=.', head, False, True,0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/somaV1.mt", '20+20=', head, False, True, 75)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -229,7 +229,7 @@ class TuringMachine:
             interrompeu = True
 
             print(
-                '\nEste programa executou %d computações.' % self._steps +
+                '\nEste programa executou %d computações.' % self._step +
                 '\nDeseja continuar?' +
                 '\nDigite um inteiro para mais n passos.' +
                 '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao

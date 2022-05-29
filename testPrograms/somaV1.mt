@@ -340,14 +340,16 @@ fim move_inicio_sub
 	
 ;bloco para mover ate o final da operação
 inicio move_fim 1
-	1 retorne
+	1 X _ e -- 2 X * e
 	1 X * d -- 1 X * d
+	2 retorne
 fim move_fim
 
 	
 ;bloco para inserir o primeiro numero depois do =
 inicio insere_depois_igual 1
     1 copiar 5
+    1 retorne
 	5 X [0] i -- 10 X Z i
 	5 X [1] i -- 10 X U i
 	5 X [2] i -- 10 X D i
@@ -363,51 +365,54 @@ inicio insere_depois_igual 1
     16 colar 20
     20 move_inicio 25
     25 procura_numero 30
+	30 X + d -- 31 X * i
+	30 X - d -- 31 X * i
+	30 X x d -- 31 X * i
 	30 X * i -- 1 X * i
-	30 X * i -- 1 X * i
-	30 X * i -- 1 X * i
-	30 X * i -- 1 X * i
+	31 retorne
 fim insere_depois_igual
 
 	
 ;bloco para procurar o proximo numero da direita
 inicio procura_numero 1
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 X * d -- 1 X * d
+    1 X 0 i -- 2 X * i
+	1 X 1 i -- 2 X * i
+	1 X 2 i -- 2 X * i
+	1 X 3 i -- 2 X * i
+	1 X 4 i -- 2 X * i
+	1 X 5 i -- 2 X * i
+	1 X 6 i -- 2 X * i
+	1 X 7 i -- 2 X * i
+	1 X 8 i -- 2 X * i
+	1 X 9 i -- 2 X * i
+	1 X + i -- 2 X * i
+	1 X - i -- 2 X * i
+	1 X x i -- 2 X * i
+    1 X = i -- 2 X * i
+    1 X * d -- 1 X * d
+    2 retorne
 fim procura_numero
 
-	
+
 ;bloco para procurar o proximo numero da esquerda
 inicio proximo_algarismo 1
 	1 X = e -- 5 X * e
 	1 X * e -- 1 X * e
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 retorne
-	5 X * e -- 5 X * e
+	5 X 0 i -- 10 X * i
+	5 X 1 i -- 10 X * i
+	5 X 2 i -- 10 X * i
+	5 X 3 i -- 10 X * i
+	5 X 4 i -- 10 X * i
+	5 X 5 i -- 10 X * i
+	5 X 6 i -- 10 X * i
+	5 X 7 i -- 10 X * i
+	5 X 8 i -- 10 X * i
+	5 X 9 i -- 10 X * i
+	5 X + i -- 10 X * i
+	5 X - i -- 10 X * i
+	5 X x i -- 10 X * i
+	5 X * i -- 5 X * i
+	10 retorne
 fim proximo_algarismo
 
 	
