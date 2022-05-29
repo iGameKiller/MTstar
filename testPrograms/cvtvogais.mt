@@ -7,7 +7,8 @@ inicio main 1
     20 X . i -- 30 X . i
     20 X * d -- 2 X * d
     30 restauraBrancos 35
-    35 X * i -- aceite X * i
+    35 X * i -- 36 X * i
+    36 aceite
 fim main
 
 ;------------------------
