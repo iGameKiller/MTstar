@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/somaV1.mt", '33+57=', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/somaV1.mt", '142+57=', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -269,17 +269,17 @@ class TuringMachine:
         linhaX += self.montaLinha()
         linhaX = linhaX + str(self.memoriaX)
 
-        linhaY = 'Fita Y: '
+        """linhaY = 'Fita Y: '
         linhaY += self.montaLinha()
         linhaY = linhaY + str(self.memoriaY)
 
         linhaZ = 'Fita Z: '
         linhaZ += self.montaLinha()
-        linhaZ = linhaZ + str(self.memoriaZ)
+        linhaZ = linhaZ + str(self.memoriaZ)"""
 
         print(linhaX, ' | ', c)
-        print(linhaY, ' |')
-        print(linhaZ, ' | \n')
+        #print(linhaY, ' |')
+        #print(linhaZ, ' | \n')
 
         self.passos = int(self.passos) - 1
 

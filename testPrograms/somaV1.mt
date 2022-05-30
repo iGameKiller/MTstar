@@ -58,7 +58,6 @@ inicio soma 1
     7 move_fim 8
     8 soma_numero 10
     10 proximo_algarismo 11
-	11 retorne
 	11 X 0 i -- 5 X * i
 	11 X 1 i -- 5 X * i
 	11 X 2 i -- 5 X * i
@@ -69,11 +68,13 @@ inicio soma 1
 	11 X 7 i -- 5 X * i
 	11 X 8 i -- 5 X * i
 	11 X 9 i -- 5 X * i
+	11 X + i -- 12 X * i
+	12 retorne
 fim soma
 
-	
+
 ;Bloco para somar 1 numero especfico
-	
+
 inicio soma_numero 1
 	1 X Z e -- 1 X * e
 	1 X U e -- 1 X * e
@@ -206,36 +207,37 @@ inicio soma_numero 1
 	100 X 7 i -- 200 X 6 i
 	100 X 8 i -- 200 X 7 i
 	100 X 9 i -- 200 X 8 i
-	
+
     150 transforma_numero_letra 151
 	151 retorne
-	
+
     200 transforma_numero_letra 201
 	201 soma_vai_um 202
 	202 retorne
 fim soma_numero
 
-	
+
 ;Bloco para Realizar o vai 1 caso necessario na soma
 inicio soma_vai_um 1
 	1 X = i -- 5 X * i
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
+	1 X 0 e -- 2 X 1 e
+	1 X 1 e -- 2 X 2 e
+	1 X 2 e -- 2 X 3 e
+	1 X 3 e -- 2 X 4 e
+	1 X 4 e -- 2 X 5 e
+	1 X 5 e -- 2 X 6 e
+	1 X 6 e -- 2 X 7 e
+	1 X 7 e -- 2 X 8 e
+	1 X 8 e -- 2 X 9 e
 	1 X 9 e -- 1 X 0 e
 	1 X * e -- 1 X * e
+    2 retorne
     5 move_frente 10
-	10 retorne
-	
+	10 X * i -- 1 X 1 2
+
 fim soma_vai_um
 
-	
+
 ; bloco para mover numero apos o = para frente e deixar espaco em branco entre o numero e o =
 inicio move_frente 1
     1 move_fim 5
@@ -259,7 +261,7 @@ inicio move_frente 1
 	5 X O d -- 185 X X d
 	5 X 9 d -- 190 X X d
 	5 X N d -- 195 X X d
-	
+
 	100 X * i -- 200 X 0 i
 	105 X * i -- 200 X Z i
 	110 X * i -- 200 X 1 i
@@ -280,31 +282,32 @@ inicio move_frente 1
 	185 X * i -- 200 X O i
 	190 X * i -- 200 X 9 i
 	195 X * i -- 200 X N i
-	
+
 	200 X X e -- 205 X * e
 	200 X * e -- 200 X * e
 	205 X = d -- 210 X * d
 	205 X * i -- 5 X * i
 	210 retorne
-	
+
 fim move_frente
 
-	
+
 ; bloco para transformar um numero em letra
 inicio transforma_numero_letra 1
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
+	1 X 0 i -- 2 X Z i
+    1 X 1 i -- 2 X U i
+    1 X 2 i -- 2 X D i
+    1 X 3 i -- 2 X T i
+    1 X 4 i -- 2 X Q i
+    1 X 5 i -- 2 X C i
+    1 X 6 i -- 2 X S i
+    1 X 7 i -- 2 X L i
+    1 X 8 i -- 2 X O i
+    1 X 9 i -- 2 X N i
+    2 retorne
 fim transforma_numero_letra
 
-	
+
 ;bloco para encontrar operação
 inicio encontra_operacao 1
 	1 X + d -- 2 X + i
@@ -314,7 +317,7 @@ inicio encontra_operacao 1
     2 retorne
 fim encontra_operacao
 
-	
+
 ;bloco para mover ate o =
 inicio move_ate_igual 1
 	1 X = d -- 2 X * i
@@ -322,7 +325,7 @@ inicio move_ate_igual 1
 	2 retorne
 fim move_ate_igual
 
-	
+
 ;bloco para mover ate o inicio
 inicio move_inicio 1
     1 X _ d -- 2 X * d
@@ -330,7 +333,7 @@ inicio move_inicio 1
 	2 retorne
 fim move_inicio
 
-	
+
 ;bloco para mover ate o inicio da operação inteira ou ate o I (indicador para subtracao negativa)
 inicio move_inicio_sub 1
 	1 retorne
@@ -338,7 +341,7 @@ inicio move_inicio_sub 1
 	1 X * e -- 1 X * e
 fim move_inicio_sub
 
-	
+
 ;bloco para mover ate o final da operação
 inicio move_fim 1
 	1 X _ e -- 2 X * e
@@ -346,7 +349,7 @@ inicio move_fim 1
 	2 retorne
 fim move_fim
 
-	
+
 ;bloco para inserir o primeiro numero depois do =
 inicio insere_depois_igual 1
     1 copiar 5
@@ -373,7 +376,7 @@ inicio insere_depois_igual 1
 	31 retorne
 fim insere_depois_igual
 
-	
+
 ;bloco para procurar o proximo numero da direita
 inicio procura_numero 1
     1 X 0 i -- 2 X * i
@@ -412,11 +415,11 @@ inicio proximo_algarismo 1
 	5 X + i -- 10 X * i
 	5 X - i -- 10 X * i
 	5 X x i -- 10 X * i
-	5 X * i -- 5 X * i
+	5 X * e -- 5 X * e
 	10 retorne
 fim proximo_algarismo
 
-	
+
 ;bloco para transformar toda a operacao em numeros
 inicio transforma_para_numero 1
 	1 move_inicio 2
@@ -430,15 +433,16 @@ inicio transforma_para_numero 1
 	2 X L d -- 2 X 7 d
 	2 X O d -- 2 X 8 d
 	2 X N d -- 2 X 9 d
-	2 retorne
+	2 X _ i -- 3 X * i
 	2 X * d -- 2 X * d
+	3 retorne
 fim transforma_para_numero
 
-	
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Conjunto de Blocos para realizar subtracao
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	
+
 ;Bloco para realizar a subtracao inteira do numero (LOOP)
 inicio subtracao 1
 	1 X [=] i -- 11 X * i
@@ -466,7 +470,7 @@ inicio subtracao 1
 	50 X 9 i -- 25 X * i
 fim subtracao
 
-	
+
 ; Bloco para subtrair um numero especfico
 inicio subtrai_numero 1
 	1 X Z e -- 1 X * e
@@ -600,19 +604,19 @@ inicio subtrai_numero 1
 	100 X 7 i -- 200 X * i
 	100 X 8 i -- 200 X * i
 	100 X 9 i -- 150 X 0 i
-	
+
     150 transforma_numero_letra 151
 	151 retorne
-	
+
     200 sub_pede_emprestado 201
     201 transforma_numero_letra 202
 	202 retorne
 fim subtrai_numero
 
-	
+
 ; bloco Responsavel por pedir um numero emprestado no numero da esquerda
 inicio sub_pede_emprestado 1
-	
+
 	1 retorne
 	1 X 0 e -- 20 X z e
 	1 X 1 e -- 20 X u e
@@ -625,9 +629,9 @@ inicio sub_pede_emprestado 1
 	1 X 8 e -- 20 X o e
 	1 X 9 e -- 20 X n e
 	1 X * e -- 1 X * e
-	
+
 	20 X 0 e -- 20 X * e
-	
+
 	20 X = i -- 5 X * i
 	20 X 1 d -- 25 X 0 d
 	20 X 2 d -- 25 X 1 d
@@ -638,9 +642,9 @@ inicio sub_pede_emprestado 1
 	20 X 7 d -- 25 X 6 d
 	20 X 8 d -- 25 X 7 d
 	20 X 9 d -- 25 X 8 d
-	
+
     25 procura_minusculo 29
-	
+
 	29 X [0] i -- 30 X * i
 	29 X [1] i -- 31 X * i
 	29 X [2] i -- 32 X * i
@@ -651,32 +655,32 @@ inicio sub_pede_emprestado 1
 	29 X [7] i -- 37 X * i
 	29 X [8] i -- 38 X * i
 	29 X [9] i -- 39 X * i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	31 X z i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	32 X z i -- 150 X 8 i
 	32 X u i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	33 X z i -- 150 X 7 i
 	33 X u i -- 150 X 8 i
 	33 X d i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	34 X z i -- 150 X 6 i
 	34 X u i -- 150 X 7 i
 	34 X d i -- 150 X 8 i
 	34 X t i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	35 X z i -- 150 X 5 i
 	35 X u i -- 150 X 6 i
 	35 X d i -- 150 X 7 i
 	35 X t i -- 150 X 8 i
 	35 X q i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	36 X z i -- 150 X 4 i
 	36 X u i -- 150 X 5 i
@@ -684,7 +688,7 @@ inicio sub_pede_emprestado 1
 	36 X t i -- 150 X 7 i
 	36 X q i -- 150 X 8 i
 	36 X c i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	37 X z i -- 150 X 3 i
 	37 X u i -- 150 X 4 i
@@ -693,7 +697,7 @@ inicio sub_pede_emprestado 1
 	37 X q i -- 150 X 7 i
 	37 X c i -- 150 X 8 i
 	37 X s i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	38 X z i -- 150 X 2 i
 	38 X u i -- 150 X 3 i
@@ -703,7 +707,7 @@ inicio sub_pede_emprestado 1
 	38 X c i -- 150 X 7 i
 	38 X s i -- 150 X 8 i
 	38 X l i -- 150 X 9 i
-	
+
 	;se X tiver segunda -- fita X na segunda
 	39 X z i -- 150 X 1 i
 	39 X u i -- 150 X 2 i
@@ -714,14 +718,14 @@ inicio sub_pede_emprestado 1
 	39 X s i -- 150 X 7 i
 	39 X l i -- 150 X 8 i
 	39 X o i -- 150 X 9 i
-	
+
 	150 retorne
 fim sub_pede_emprestado
 
-	
+
 ;bloco para procurar indicador minusculo a direita
 inicio procura_minusculo 1
-	
+
 	1 retorne
 	1 retorne
 	1 retorne
@@ -736,7 +740,7 @@ inicio procura_minusculo 1
 	1 X * d -- 1 X * d
 fim procura_minusculo
 
-	
+
 ; bloco para trasnformar letra minuscula em numero
 inicio transforma_letra_minus_numero 1
 	1 retorne
@@ -751,7 +755,7 @@ inicio transforma_letra_minus_numero 1
 	1 retorne
 fim transforma_letra_minus_numero
 
-	
+
 ; bloco para pegar proximo_algarismo a direita
 inicio proximo_algarismo_direita 1
 	1 retorne
@@ -769,23 +773,23 @@ inicio proximo_algarismo_direita 1
 	1 X * d -- 1 X * d
 fim proximo_algarismo_direita
 
-	
+
 ; Bloco para identificar qual o maior numero de uma subtracao (numero antes do - ou depois do -)
 inicio identifica_maior 1
-	
+
     1 move_inicio_sub 2
     2 insere_depois_igual 3
-	
+
     3 move_fim 4
 	4 X * d -- 5 X * d
 	5 X _ i -- 6 X H i
-	
+
 	6 X - i -- 7 X * i
 	6 X * e -- 6 X * e
-	
+
     7 proximo_algarismo_direita 8
     8 copiar 9
-	
+
 	9 X 0 i -- 10 X Z i
 	9 X 1 i -- 10 X U i
 	9 X 2 i -- 10 X D i
@@ -797,13 +801,13 @@ inicio identifica_maior 1
 	9 X 8 i -- 10 X O i
 	9 X 9 i -- 10 X N i
 	9 X [=] i -- 10 X * i
-	
+
 	10 X = d -- 11 X * d
 	10 X * d -- 10 X * d
-	
+
     11 proximo_algarismo_direita 12
-	
-	
+
+
 	12 X [0] i -- 15 X Z i
 	12 X [1] i -- 15 X U i
 	12 X [2] i -- 15 X D i
@@ -814,15 +818,15 @@ inicio identifica_maior 1
 	12 X [7] i -- 15 X L i
 	12 X [8] i -- 15 X O i
 	12 X [9] i -- 15 X N i
-	
+
 	16 X H i -- 17 X * i
 	16 X * i -- 18 X * i
     17 identifica_maior_length_igual 19
     18 apaga_depois_igual 19
 	19 retorne
-	
+
 	15 X * i -- 6 X * i
-	
+
 	20 X [0] i -- 21 X Z i
 	20 X [1] i -- 21 X U i
 	20 X [2] i -- 21 X D i
@@ -833,18 +837,18 @@ inicio identifica_maior 1
 	20 X [7] i -- 21 X L i
 	20 X [8] i -- 21 X O i
 	20 X [9] i -- 21 X N i
-	
-	
+
+
 	21 X - i -- 22 X * i
 	21 X * e -- 21 X * e
     22 proximo_algarismo_direita 23
-	
+
 	23 retorne
 	23 retorne
 	23 X * i -- 24 X * i
-	
+
     24 copiar 25
-	
+
 	25 X 0 i -- 30 X Z i
 	25 X 1 i -- 30 X U i
 	25 X 2 i -- 30 X D i
@@ -855,10 +859,10 @@ inicio identifica_maior 1
 	25 X 7 i -- 30 X L i
 	25 X 8 i -- 30 X O i
 	25 X 9 i -- 30 X N i
-	
+
     30 move_fim 31
 	31 X * d -- 32 X * d
-	
+
 	32 X [0] i -- 35 X Z i
 	32 X [1] i -- 35 X U i
 	32 X [2] i -- 35 X D i
@@ -869,45 +873,45 @@ inicio identifica_maior 1
 	32 X [7] i -- 35 X L i
 	32 X [8] i -- 35 X O i
 	32 X [9] i -- 35 X N i
-	
+
 	35 X * i -- 21 X * i
 fim identifica_maior
 
-	
+
 ;bloco para inserir o primeiro numero apos o =
 inicio insere_primeiro_numero 1
-	
+
     1 transforma_para_numero 2
-	
+
 	2 X * e -- 100 X * e
-	
+
     100 move_inicio 3
 	3 X = i -- 5 X I i
 	3 X * d -- 3 X * d
-	
+
     5 move_fim 10
 	10 X * d -- 11 X * d
 	11 X _ i -- 15 X = i
-	
+
     15 move_inicio 16
     16 insere_depois_igual 20
-	
+
 	; X Troca por -- - X = por
 	20 X = i -- 25 X - i
 	20 X * d -- 20 X * d
-	
+
 	; X Insere no -- final X = no
     25 move_fim 26
 	26 X * d -- 27 X * d
 	27 X _ i -- 30 X = i
-	
+
 	30 retorne
-	
+
 fim insere_primeiro_numero
 
-	
+
 ;bloco para inserir o primeiro numero apos o = na subtracao
-	
+
 inicio insere_depois_igual_sub 1
     1 copiar 5
 	5 X [0] i -- 10 X Z i
@@ -931,51 +935,51 @@ inicio insere_depois_igual_sub 1
 	30 X * i -- 1 X * i
 fim insere_depois_igual_sub
 
-	
+
 ;Bloco para apagar os numeros entre o I e o =
 inicio apaga_i_ate_igual 1
     1 move_inicio 5
-	
+
 	5 X I d -- 10 X * d
 	5 X * d -- 5 X * d
-	
+
 	10 X = i -- 15 X * i
 	10 X * d -- 10 X _ d
-	
+
     15 volta_numeros_ate_i 20
-	
+
 	20 retorne
 fim apaga_i_ate_igual
 
-	
+
 ; Bloco para remover todos os espacos entre o I e os numeros do resultado
 inicio volta_numeros_ate_i 1
     1 move_fim 2
 	2 X * d -- 3 X * d
 	3 X * i -- 4 X X i
-	
+
 	4 X = i -- 5 X * i
 	4 X * e -- 4 X * e
-	
+
     5 copiar 6
 	6 X * i -- 10 X _ i
-	
+
 	10 X I i -- 20 X * i
 	10 X _ e -- 10 X * e
-	
+
     20 colar 25
 	25 X * d -- 30 X * d
 	30 X _ d -- 35 X I d
-	
+
 	35 X _ d -- 35 X * d
 	35 X X i -- 40 X _ i
 	35 X * i -- 5 X * i
-	
+
 	40 X _ e -- 40 X * e
 	40 retorne
 fim volta_numeros_ate_i
 
-	
+
 ; bloco para apagar todos caracteres apos o =
 inicio apaga_depois_igual 1
     1 move_fim 2
@@ -993,14 +997,14 @@ inicio verifica_i_esquerda 1
 	1 X * e -- 1 X * e
 fim verifica_i_esquerda
 
-	
+
 ; bloco para andar ate o sinal de -
 inicio anda_ate_menos 1
 	1 retorne
 	1 X * d -- 1 X * d
 fim anda_ate_menos
 
-	
+
 inicio identifica_maior_length_igual 1
 	1 X move_inicio move -- inicio X ; move
     2 transforma_para_numero 3
@@ -1023,7 +1027,7 @@ inicio identifica_maior_length_igual 1
     15 transforma_numero_letra 20
     20 move_ate_igual 25
 	25 X * d -- 25 X * d
-	
+
     ;compara com 0
 	30 X [0] i -- 5 X * i
 	30 X [1] i -- 100 X * i
@@ -1035,7 +1039,7 @@ inicio identifica_maior_length_igual 1
 	30 X [7] i -- 100 X * i
 	30 X [8] i -- 100 X * i
 	30 X [9] i -- 100 X * i
-	
+
     ;compara com 1
 	31 X [0] i -- 105 X * i
 	31 X [1] i -- 5 X * i
@@ -1047,7 +1051,7 @@ inicio identifica_maior_length_igual 1
 	31 X [7] i -- 100 X * i
 	31 X [8] i -- 100 X * i
 	31 X [9] i -- 100 X * i
-	
+
     ;compara com 2
 	32 X [0] i -- 105 X * i
 	32 X [1] i -- 105 X * i
@@ -1059,7 +1063,7 @@ inicio identifica_maior_length_igual 1
 	32 X [7] i -- 100 X * i
 	32 X [8] i -- 100 X * i
 	32 X [9] i -- 100 X * i
-	
+
     ;compara com 3
 	33 X [0] i -- 105 X * i
 	33 X [1] i -- 105 X * i
@@ -1071,7 +1075,7 @@ inicio identifica_maior_length_igual 1
 	33 X [7] i -- 100 X * i
 	33 X [8] i -- 100 X * i
 	33 X [9] i -- 100 X * i
-	
+
     ;compara com 4
 	34 X [0] i -- 105 X * i
 	34 X [1] i -- 105 X * i
@@ -1083,7 +1087,7 @@ inicio identifica_maior_length_igual 1
 	34 X [7] i -- 100 X * i
 	34 X [8] i -- 100 X * i
 	34 X [9] i -- 100 X * i
-	
+
     ;compara com 5
 	35 X [0] i -- 105 X * i
 	35 X [1] i -- 105 X * i
@@ -1095,7 +1099,7 @@ inicio identifica_maior_length_igual 1
 	35 X [7] i -- 100 X * i
 	35 X [8] i -- 100 X * i
 	35 X [9] i -- 100 X * i
-	
+
     ;compara com 6
 	36 X [0] i -- 105 X * i
 	36 X [1] i -- 105 X * i
@@ -1107,7 +1111,7 @@ inicio identifica_maior_length_igual 1
 	36 X [7] i -- 100 X * i
 	36 X [8] i -- 100 X * i
 	36 X [9] i -- 100 X * i
-	
+
     ;compara com 7
 	37 X [0] i -- 105 X * i
 	37 X [1] i -- 105 X * i
@@ -1119,7 +1123,7 @@ inicio identifica_maior_length_igual 1
 	37 X [7] i -- 5 X * i
 	37 X [8] i -- 100 X * i
 	37 X [9] i -- 100 X * i
-	
+
     ;compara com 8
 	38 X [0] i -- 105 X * i
 	38 X [1] i -- 105 X * i
@@ -1131,7 +1135,7 @@ inicio identifica_maior_length_igual 1
 	38 X [7] i -- 105 X * i
 	38 X [8] i -- 5 X * i
 	38 X [9] i -- 100 X * i
-	
+
     ;compara com 9
 	39 X [0] i -- 105 X * i
 	39 X [1] i -- 105 X * i
@@ -1143,19 +1147,19 @@ inicio identifica_maior_length_igual 1
 	39 X [7] i -- 105 X * i
 	39 X [8] i -- 105 X * i
 	39 X [9] i -- 5 X * i
-	
+
     101 apaga_depois_igual 102
     102 transforma_para_numero 103
 	103 X * e -- 103 X * e
-	
-	
+
+
     112 apaga_depois_igual 113
     113 transforma_para_numero 114
 	114 X * e -- 114 X * e
-	
+
 fim identifica_maior_length_igual
 
-	
+
 ;bloco para inserir o segundo numero depois do =
 inicio insere_segundo_depois_igual 1
     1 copiar 5
@@ -1178,4 +1182,3 @@ inicio insere_segundo_depois_igual 1
 	30 retorne
 	30 X * i -- 1 X * i
 fim insere_segundo_depois_igual
-
