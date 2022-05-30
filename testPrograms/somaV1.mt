@@ -336,9 +336,10 @@ fim move_inicio
 
 ;bloco para mover ate o inicio da operação inteira ou ate o I (indicador para subtracao negativa)
 inicio move_inicio_sub 1
-	1 retorne
-	1 retorne
+    1 X I d -- 2 X * d
+	1 X _ d -- 2 X * d
 	1 X * e -- 1 X * e
+	2 retorne
 fim move_inicio_sub
 
 
@@ -353,7 +354,6 @@ fim move_fim
 ;bloco para inserir o primeiro numero depois do =
 inicio insere_depois_igual 1
     1 copiar 5
-    1 retorne
 	5 X [0] i -- 10 X Z i
 	5 X [1] i -- 10 X U i
 	5 X [2] i -- 10 X D i
@@ -758,19 +758,20 @@ fim transforma_letra_minus_numero
 
 ; bloco para pegar proximo_algarismo a direita
 inicio proximo_algarismo_direita 1
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
+    1 X = i -- 2 X * i
+    1 X 0 i -- 2 X * i
+    1 X 1 i -- 2 X * i
+    1 X 2 i -- 2 X * i
+    1 X 3 i -- 2 X * i
+    1 X 4 i -- 2 X * i
+    1 X 5 i -- 2 X * i
+    1 X 6 i -- 2 X * i
+    1 X 7 i -- 2 X * i
+    1 X 8 i -- 2 X * i
+    1 X 9 i -- 2 X * i
+    1 X H i -- 2 X * i
 	1 X * d -- 1 X * d
+	2 retorne
 fim proximo_algarismo_direita
 
 
@@ -807,6 +808,9 @@ inicio identifica_maior 1
 
     11 proximo_algarismo_direita 12
 
+    12 X [=] i -- 16 X * i
+    12 X H i -- 20 X * i
+
 
 	12 X [0] i -- 15 X Z i
 	12 X [1] i -- 15 X U i
@@ -821,9 +825,10 @@ inicio identifica_maior 1
 
 	16 X H i -- 17 X * i
 	16 X * i -- 18 X * i
+
     17 identifica_maior_length_igual 19
     18 apaga_depois_igual 19
-	19 retorne
+	19 X * i -- 40 X * i
 
 	15 X * i -- 6 X * i
 
@@ -843,8 +848,8 @@ inicio identifica_maior 1
 	21 X * e -- 21 X * e
     22 proximo_algarismo_direita 23
 
-	23 retorne
-	23 retorne
+	23 X - i -- 40 X * i
+	23 X = i -- 40 X * i
 	23 X * i -- 24 X * i
 
     24 copiar 25
@@ -875,6 +880,8 @@ inicio identifica_maior 1
 	32 X [9] i -- 35 X N i
 
 	35 X * i -- 21 X * i
+
+	40 retorne
 fim identifica_maior
 
 
@@ -1006,7 +1013,7 @@ fim anda_ate_menos
 
 
 inicio identifica_maior_length_igual 1
-	1 X move_inicio move -- inicio X ; move
+	1 move_inicio 2
     2 transforma_para_numero 3
 	3 X _ e -- 4 X * e
 	4 X H e -- 5 X _ e
