@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/somaV1.mt", '59-14=', head, False, True, 187)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/somaV1.mt", '59-14=', head, False, True, 220)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -198,6 +198,9 @@ class TuringMachine:
 
     def atualizaEstado(self, novoEstado):
 
+        if novoEstado == 100:
+            print("Pare")
+
         if novoEstado == 'retorne':
             bloco, retorno = self.pilhaDeChamada[(-1)]
             if retorno is None:
@@ -213,6 +216,7 @@ class TuringMachine:
             self.terminouExecucao(False)
 
         else:
+
             self.estado = novoEstado
 
         return

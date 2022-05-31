@@ -233,7 +233,7 @@ inicio soma_vai_um 1
 	1 X * e -- 1 X * e
     2 retorne
     5 move_frente 10
-	10 X * i -- 1 X 1 2
+	10 X * i -- 2 X 1 i
 
 fim soma_vai_um
 
@@ -287,7 +287,8 @@ inicio move_frente 1
 	200 X * e -- 200 X * e
 	205 X = d -- 210 X * d
 	205 X * i -- 5 X * i
-	210 retorne
+	210 X X i -- 211 X _ i
+	211 retorne
 
 fim move_frente
 
@@ -1033,6 +1034,18 @@ inicio identifica_maior_length_igual 1
     10 copiar 15
     15 transforma_numero_letra 20
     20 move_ate_igual 25
+
+    25 X 0 d -- 30 X Z i
+    25 X 1 d -- 31 X U i
+    25 X 2 d -- 32 X D i
+    25 X 3 d -- 33 X T i
+    25 X 4 d -- 34 X Q i
+    25 X 5 d -- 35 X C i
+    25 X 6 d -- 36 X S i
+    25 X 7 d -- 37 X L i
+    25 X 8 d -- 38 X O i
+    25 X 9 i -- 39 X N i
+	25 X _ d -- 110 X * i
 	25 X * d -- 25 X * d
 
     ;compara com 0
@@ -1155,14 +1168,18 @@ inicio identifica_maior_length_igual 1
 	39 X [8] i -- 105 X * i
 	39 X [9] i -- 5 X * i
 
+    100 gravar = 101
     101 apaga_depois_igual 102
     102 transforma_para_numero 103
 	103 X * e -- 103 X * e
 
+    105 X * i -- 115 X * i
 
+    110 X * e -- 111 X * e
     112 apaga_depois_igual 113
     113 transforma_para_numero 114
-	114 X * e -- 114 X * e
+	114 X * e -- 115 X * e
+    115 retorne
 
 fim identifica_maior_length_igual
 

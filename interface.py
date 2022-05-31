@@ -111,7 +111,7 @@ class Interface(object):
             else:
                 self._novoComando(self.__nomeBloco, 'chamada', linha)
 
-        if linha[1] == 'gravar' and len(linha) == 4:
+        if self._temEstado(linha) and len(linha) == 4:
             self._novoComando(self.__nomeBloco, 'gravar', linha)
 
         elif self._temEstado(linha) and len(linha) == 9:
@@ -174,8 +174,8 @@ class Interface(object):
             comando = [tipo, estInicial, comando, estRetorno]
 
         elif tipo == 'gravar':
-            estado, str, car, alvo = linha
-            comando = [estado, tipo, car, alvo]
+            estInicial, comando, car, estRetorno = linha
+            comando = [comando, estInicial, car, estRetorno]
 
         lista.append(comando)
 
