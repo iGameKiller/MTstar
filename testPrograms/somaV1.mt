@@ -458,7 +458,7 @@ inicio subtracao 1
     35 move_fim 40
     40 subtrai_numero 45
     45 proximo_algarismo 50
-	50 retorne
+
 	50 X 0 i -- 25 X * i
 	50 X 1 i -- 25 X * i
 	50 X 2 i -- 25 X * i
@@ -469,6 +469,8 @@ inicio subtracao 1
 	50 X 7 i -- 25 X * i
 	50 X 8 i -- 25 X * i
 	50 X 9 i -- 25 X * i
+	50 X - i -- 51 X * i
+	51 retorne
 fim subtracao
 
 
@@ -611,14 +613,15 @@ inicio subtrai_numero 1
 
     200 sub_pede_emprestado 201
     201 transforma_numero_letra 202
-	202 retorne
+	202 X * i -- 203 X * i
+	203 retorne
 fim subtrai_numero
 
 
 ; bloco Responsavel por pedir um numero emprestado no numero da esquerda
 inicio sub_pede_emprestado 1
 
-	1 retorne
+	1 X = e -- 151 X * e
 	1 X 0 e -- 20 X z e
 	1 X 1 e -- 20 X u e
 	1 X 2 e -- 20 X d e
@@ -720,40 +723,42 @@ inicio sub_pede_emprestado 1
 	39 X l i -- 150 X 8 i
 	39 X o i -- 150 X 9 i
 
-	150 retorne
+	150 X * i -- 151 X * i
+	151 retorne
 fim sub_pede_emprestado
 
 
 ;bloco para procurar indicador minusculo a direita
 inicio procura_minusculo 1
 
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
+	1 X z i -- 2 X * i
+	1 X u i -- 2 X * i
+	1 X d i -- 2 X * i
+	1 X t i -- 2 X * i
+	1 X q i -- 2 X * i
+	1 X c i -- 2 X * i
+	1 X s i -- 2 X * i
+	1 X l i -- 2 X * i
+	1 X o i -- 2 X * i
+	1 X n i -- 2 X * i
 	1 X 0 d -- 1 X 9 d
-	1 X * d -- 1 X * d
+	2 retorne
 fim procura_minusculo
 
 
 ; bloco para trasnformar letra minuscula em numero
 inicio transforma_letra_minus_numero 1
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
-	1 retorne
+	1 X z i -- 2 X 0 i
+	1 X u i -- 2 X 1 i
+	1 X d i -- 2 X 2 i
+	1 X t i -- 2 X 3 i
+	1 X q i -- 2 X 4 i
+	1 X c i -- 2 X 5 i
+	1 X s i -- 2 X 6 i
+	1 X l i -- 2 X 7 i
+	1 X o i -- 2 X 8 i
+	1 X n i -- 2 X 9 i
+	2 retorne
 fim transforma_letra_minus_numero
 
 
@@ -913,7 +918,8 @@ inicio insere_primeiro_numero 1
 	26 X * d -- 27 X * d
 	27 X _ i -- 30 X = i
 
-	30 retorne
+	30 X * i -- 31 X * i
+	31 retorne
 
 fim insere_primeiro_numero
 
@@ -937,9 +943,9 @@ inicio insere_depois_igual_sub 1
     16 colar 20
     20 move_inicio_sub 25
     25 procura_numero 30
-	30 retorne
-	30 retorne
-	30 retorne
+	30 X + d -- 1 X * d
+	30 X * d -- 1 X * d
+	30 X * x -- 1 X * d
 	30 X * i -- 1 X * i
 fim insere_depois_igual_sub
 
@@ -956,7 +962,8 @@ inicio apaga_i_ate_igual 1
 
     15 volta_numeros_ate_i 20
 
-	20 retorne
+	20 X * e -- 21 X * e
+	21 retorne
 fim apaga_i_ate_igual
 
 
@@ -984,7 +991,8 @@ inicio volta_numeros_ate_i 1
 	35 X * i -- 5 X * i
 
 	40 X _ e -- 40 X * e
-	40 retorne
+	40 X I e -- 41 X _ e
+	41 retorne
 fim volta_numeros_ate_i
 
 
@@ -995,21 +1003,24 @@ inicio apaga_depois_igual 1
 	2 X * e -- 2 X _ e
     3 move_inicio 4
     4 transforma_para_numero 5
-	5 retorne
+    5 X * e -- 6 X * e
+	6 retorne
 fim apaga_depois_igual
 
 ;bloco para verificar se existe letra I a esquerda
 inicio verifica_i_esquerda 1
-	1 retorne
-	1 retorne
+	1 X I i -- 2 X I i
+	1 X _ i -- 2 X * i
 	1 X * e -- 1 X * e
+	2 retorne
 fim verifica_i_esquerda
 
 
 ; bloco para andar ate o sinal de -
 inicio anda_ate_menos 1
-	1 retorne
+	1 X - i -- 2 X * i
 	1 X * d -- 1 X * d
+	2 retorne
 fim anda_ate_menos
 
 
@@ -1171,6 +1182,7 @@ inicio identifica_maior_length_igual 1
     100 gravar = 101
     101 apaga_depois_igual 102
     102 transforma_para_numero 103
+    103 X = i -- 115 X * i
 	103 X * e -- 103 X * e
 
     105 X * i -- 115 X * i
@@ -1203,6 +1215,6 @@ inicio insere_segundo_depois_igual 1
 	20 X x d -- 25 X * d
 	20 X * e -- 20 X * e
     25 procura_numero 30
-	30 retorne
+	30 X = i -- 1 X * i
 	30 X * i -- 1 X * i
 fim insere_segundo_depois_igual
