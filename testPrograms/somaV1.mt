@@ -43,12 +43,28 @@ inicio main 1
     45 apaga_i_ate_igual 50
 	
     50 transforma_para_numero 55
-	55 X * i -- aceite X * i
+
+    55 formatasaida 56
+	56 move_fim 60
+	60 X * d -- 61 X * d
+	61 aceite
 fim main
 
-	
+inicio formatasaida 1
+    1 X _ e -- 2 X > e
+
+    2 X _ i -- 3 X < i
+    2 X * e -- 2 Z * e
+
+    3 X _ i -- 4 X * i
+    3 X * d -- 3 Z * d
+
+
+    4 retorne
+fim formatasaida
 ; Bloco Responsavel por Realizar o loop de soma e marcar numeros somados
 inicio soma 1
+
     1 move_inicio 2
     2 insere_depois_igual 3
     3 move_ate_igual 4
@@ -70,12 +86,13 @@ inicio soma 1
 	11 X 9 i -- 5 X * i
 	11 X + i -- 12 X * i
 	12 retorne
+
 fim soma
 
 
 ;Bloco para somar 1 numero especfico
-
 inicio soma_numero 1
+
 	1 X Z e -- 1 X * e
 	1 X U e -- 1 X * e
 	1 X D e -- 1 X * e
@@ -88,7 +105,9 @@ inicio soma_numero 1
 	1 X N e -- 1 X * e
 	1 X = i -- 2 X * i
 	1 X * i -- 5 X * i
+
     2 move_frente 4
+
 	4 X _ i -- 5 X 0 i
 	5 X [0] i -- 10 X * i
 	5 X [1] i -- 20 X * i
@@ -100,6 +119,7 @@ inicio soma_numero 1
 	5 X [7] i -- 80 X * i
 	5 X [8] i -- 90 X * i
 	5 X [9] i -- 100 X * i
+
 	;se X tiver segunda -- fita X na segunda
 	10 X 0 i -- 150 X 0 i
 	10 X 1 i -- 150 X 1 i
@@ -111,6 +131,7 @@ inicio soma_numero 1
 	10 X 7 i -- 150 X 7 i
 	10 X 8 i -- 150 X 8 i
 	10 X 9 i -- 150 X 9 i
+
 	;se X tiver segunda -- fita X na segunda
 	20 X 0 i -- 150 X 1 i
 	20 X 1 i -- 150 X 2 i
@@ -122,6 +143,7 @@ inicio soma_numero 1
 	20 X 7 i -- 150 X 8 i
 	20 X 8 i -- 150 X 9 i
 	20 X 9 i -- 200 X 0 i
+
 	;se X tiver segunda -- fita X na segunda
 	30 X 0 i -- 150 X 2 i
 	30 X 1 i -- 150 X 3 i
@@ -133,6 +155,7 @@ inicio soma_numero 1
 	30 X 7 i -- 150 X 9 i
 	30 X 8 i -- 200 X 0 i
 	30 X 9 i -- 200 X 1 i
+
 	;se X tiver segunda -- fita X na segunda
 	40 X 0 i -- 150 X 3 i
 	40 X 1 i -- 150 X 4 i
@@ -144,6 +167,7 @@ inicio soma_numero 1
 	40 X 7 i -- 200 X 0 i
 	40 X 8 i -- 200 X 1 i
 	40 X 9 i -- 200 X 2 i
+
 	;se X tiver segunda -- fita X na segunda
 	50 X 0 i -- 150 X 4 i
 	50 X 1 i -- 150 X 5 i
@@ -155,6 +179,7 @@ inicio soma_numero 1
 	50 X 7 i -- 200 X 1 i
 	50 X 8 i -- 200 X 2 i
 	50 X 9 i -- 200 X 3 i
+
 	;se X tiver segunda -- fita X na segunda
 	60 X 0 i -- 150 X 5 i
 	60 X 1 i -- 150 X 6 i
@@ -166,6 +191,7 @@ inicio soma_numero 1
 	60 X 7 i -- 200 X 2 i
 	60 X 8 i -- 200 X 3 i
 	60 X 9 i -- 200 X 4 i
+
 	;se X tiver segunda -- fita X na segunda
 	70 X 0 i -- 150 X 6 i
 	70 X 1 i -- 150 X 7 i
@@ -214,11 +240,13 @@ inicio soma_numero 1
     200 transforma_numero_letra 201
 	201 soma_vai_um 202
 	202 retorne
+
 fim soma_numero
 
 
 ;Bloco para Realizar o vai 1 caso necessario na soma
 inicio soma_vai_um 1
+
 	1 X = i -- 5 X * i
 	1 X 0 e -- 2 X 1 e
 	1 X 1 e -- 2 X 2 e
@@ -240,6 +268,7 @@ fim soma_vai_um
 
 ; bloco para mover numero apos o = para frente e deixar espaco em branco entre o numero e o =
 inicio move_frente 1
+
     1 move_fim 5
 	5 X 0 d -- 100 X X d
 	5 X Z d -- 105 X X d
@@ -295,6 +324,7 @@ fim move_frente
 
 ; bloco para transformar um numero em letra
 inicio transforma_numero_letra 1
+
 	1 X 0 i -- 2 X Z i
     1 X 1 i -- 2 X U i
     1 X 2 i -- 2 X D i
@@ -306,6 +336,7 @@ inicio transforma_numero_letra 1
     1 X 8 i -- 2 X O i
     1 X 9 i -- 2 X N i
     2 retorne
+
 fim transforma_numero_letra
 
 
@@ -354,6 +385,7 @@ fim move_fim
 
 ;bloco para inserir o primeiro numero depois do =
 inicio insere_depois_igual 1
+
     1 copiar 5
 	5 X [0] i -- 10 X Z i
 	5 X [1] i -- 10 X U i
@@ -375,11 +407,13 @@ inicio insere_depois_igual 1
 	30 X x d -- 31 X * d
 	30 X * i -- 1 X * i
 	31 retorne
+
 fim insere_depois_igual
 
 
 ;bloco para procurar o proximo numero da direita
 inicio procura_numero 1
+
     1 X 0 i -- 2 X * i
 	1 X 1 i -- 2 X * i
 	1 X 2 i -- 2 X * i
@@ -396,11 +430,13 @@ inicio procura_numero 1
     1 X = i -- 2 X * i
     1 X * d -- 1 X * d
     2 retorne
+
 fim procura_numero
 
 
 ;bloco para procurar o proximo numero da esquerda
 inicio proximo_algarismo 1
+
 	1 X = e -- 5 X * e
 	1 X * e -- 1 X * e
 	5 X 0 i -- 10 X * i
@@ -418,11 +454,13 @@ inicio proximo_algarismo 1
 	5 X x i -- 10 X * i
 	5 X * e -- 5 X * e
 	10 retorne
+
 fim proximo_algarismo
 
 
 ;bloco para transformar toda a operacao em numeros
 inicio transforma_para_numero 1
+
 	1 move_inicio 2
 	2 X Z d -- 2 X 0 d
 	2 X U d -- 2 X 1 d
@@ -437,6 +475,7 @@ inicio transforma_para_numero 1
 	2 X _ i -- 3 X * i
 	2 X * d -- 2 X * d
 	3 retorne
+
 fim transforma_para_numero
 
 
@@ -446,6 +485,7 @@ fim transforma_para_numero
 
 ;Bloco para realizar a subtracao inteira do numero (LOOP)
 inicio subtracao 1
+
 	1 X [=] i -- 11 X * i
 	1 X * i -- 5 X * i
     5 move_inicio_sub 10
@@ -471,11 +511,13 @@ inicio subtracao 1
 	50 X 9 i -- 25 X * i
 	50 X - i -- 51 X * i
 	51 retorne
+
 fim subtracao
 
 
 ; Bloco para subtrair um numero especfico
 inicio subtrai_numero 1
+
 	1 X Z e -- 1 X * e
 	1 X U e -- 1 X * e
 	1 X D e -- 1 X * e
@@ -488,7 +530,9 @@ inicio subtrai_numero 1
 	1 X N e -- 1 X * e
 	1 X = i -- 2 X * i
 	1 X * i -- 5 X * i
+
     2 move_frente 4
+
 	4 X _ i -- 5 X 0 i
 	5 X [0] i -- 10 X * i
 	5 X [1] i -- 20 X * i
@@ -500,7 +544,7 @@ inicio subtrai_numero 1
 	5 X [7] i -- 80 X * i
 	5 X [8] i -- 90 X * i
 	5 X [9] i -- 100 X * i
-	;se X tiver segunda -- fita X na segunda
+
 	10 X 0 i -- 150 X 0 i
 	10 X 1 i -- 150 X 1 i
 	10 X 2 i -- 150 X 2 i
@@ -511,7 +555,7 @@ inicio subtrai_numero 1
 	10 X 7 i -- 150 X 7 i
 	10 X 8 i -- 150 X 8 i
 	10 X 9 i -- 150 X 9 i
-	;se X tiver segunda -- fita X na segunda
+
 	20 X 0 i -- 200 X * i
 	20 X 1 i -- 150 X 0 i
 	20 X 2 i -- 150 X 1 i
@@ -522,7 +566,7 @@ inicio subtrai_numero 1
 	20 X 7 i -- 150 X 6 i
 	20 X 8 i -- 150 X 7 i
 	20 X 9 i -- 150 X 8 i
-	;se X tiver segunda -- fita X na segunda
+
 	30 X 0 i -- 200 X * i
 	30 X 1 i -- 200 X * i
 	30 X 2 i -- 150 X 0 i
@@ -533,7 +577,7 @@ inicio subtrai_numero 1
 	30 X 7 i -- 150 X 5 i
 	30 X 8 i -- 150 X 6 i
 	30 X 9 i -- 150 X 7 i
-	;se X tiver segunda -- fita X na segunda
+
 	40 X 0 i -- 200 X * i
 	40 X 1 i -- 200 X * i
 	40 X 2 i -- 200 X * i
@@ -544,7 +588,7 @@ inicio subtrai_numero 1
 	40 X 7 i -- 150 X 4 i
 	40 X 8 i -- 150 X 5 i
 	40 X 9 i -- 150 X 6 i
-	;se X tiver segunda -- fita X na segunda
+
 	50 X 0 i -- 200 X * i
 	50 X 1 i -- 200 X * i
 	50 X 2 i -- 200 X * i
@@ -555,7 +599,7 @@ inicio subtrai_numero 1
 	50 X 7 i -- 150 X 3 i
 	50 X 8 i -- 150 X 4 i
 	50 X 9 i -- 150 X 5 i
-	;se X tiver segunda -- fita X na segunda
+
 	60 X 0 i -- 200 X * i
 	60 X 1 i -- 200 X * i
 	60 X 2 i -- 200 X * i
@@ -566,7 +610,7 @@ inicio subtrai_numero 1
 	60 X 7 i -- 150 X 2 i
 	60 X 8 i -- 150 X 3 i
 	60 X 9 i -- 150 X 4 i
-	;se X tiver segunda -- fita X na segunda
+
 	70 X 0 i -- 200 X * i
 	70 X 1 i -- 200 X * i
 	70 X 2 i -- 200 X * i
@@ -615,6 +659,7 @@ inicio subtrai_numero 1
     201 transforma_numero_letra 202
 	202 X * i -- 203 X * i
 	203 retorne
+
 fim subtrai_numero
 
 
@@ -660,32 +705,26 @@ inicio sub_pede_emprestado 1
 	29 X [8] i -- 38 X * i
 	29 X [9] i -- 39 X * i
 
-	;se X tiver segunda -- fita X na segunda
 	31 X z i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	32 X z i -- 150 X 8 i
 	32 X u i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	33 X z i -- 150 X 7 i
 	33 X u i -- 150 X 8 i
 	33 X d i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	34 X z i -- 150 X 6 i
 	34 X u i -- 150 X 7 i
 	34 X d i -- 150 X 8 i
 	34 X t i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	35 X z i -- 150 X 5 i
 	35 X u i -- 150 X 6 i
 	35 X d i -- 150 X 7 i
 	35 X t i -- 150 X 8 i
 	35 X q i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	36 X z i -- 150 X 4 i
 	36 X u i -- 150 X 5 i
 	36 X d i -- 150 X 6 i
@@ -693,7 +732,6 @@ inicio sub_pede_emprestado 1
 	36 X q i -- 150 X 8 i
 	36 X c i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	37 X z i -- 150 X 3 i
 	37 X u i -- 150 X 4 i
 	37 X d i -- 150 X 5 i
@@ -702,7 +740,6 @@ inicio sub_pede_emprestado 1
 	37 X c i -- 150 X 8 i
 	37 X s i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	38 X z i -- 150 X 2 i
 	38 X u i -- 150 X 3 i
 	38 X d i -- 150 X 4 i
@@ -712,7 +749,6 @@ inicio sub_pede_emprestado 1
 	38 X s i -- 150 X 8 i
 	38 X l i -- 150 X 9 i
 
-	;se X tiver segunda -- fita X na segunda
 	39 X z i -- 150 X 1 i
 	39 X u i -- 150 X 2 i
 	39 X d i -- 150 X 3 i
@@ -725,6 +761,7 @@ inicio sub_pede_emprestado 1
 
 	150 X * i -- 151 X * i
 	151 retorne
+
 fim sub_pede_emprestado
 
 
@@ -743,11 +780,13 @@ inicio procura_minusculo 1
 	1 X n i -- 2 X * i
 	1 X 0 d -- 1 X 9 d
 	2 retorne
+
 fim procura_minusculo
 
 
 ; bloco para trasnformar letra minuscula em numero
 inicio transforma_letra_minus_numero 1
+
 	1 X z i -- 2 X 0 i
 	1 X u i -- 2 X 1 i
 	1 X d i -- 2 X 2 i
@@ -759,11 +798,13 @@ inicio transforma_letra_minus_numero 1
 	1 X o i -- 2 X 8 i
 	1 X n i -- 2 X 9 i
 	2 retorne
+
 fim transforma_letra_minus_numero
 
 
 ; bloco para pegar proximo_algarismo a direita
 inicio proximo_algarismo_direita 1
+
     1 X = i -- 2 X * i
     1 X 0 i -- 2 X * i
     1 X 1 i -- 2 X * i
@@ -778,6 +819,7 @@ inicio proximo_algarismo_direita 1
     1 X H i -- 2 X * i
 	1 X * d -- 1 X * d
 	2 retorne
+
 fim proximo_algarismo_direita
 
 
@@ -888,10 +930,10 @@ inicio identifica_maior 1
 	35 X * i -- 21 X * i
 
 	40 retorne
+
 fim identifica_maior
 
 
-;bloco para inserir o primeiro numero apos o =
 inicio insere_primeiro_numero 1
 
     1 transforma_para_numero 2
@@ -924,10 +966,10 @@ inicio insere_primeiro_numero 1
 fim insere_primeiro_numero
 
 
-;bloco para inserir o primeiro numero apos o = na subtracao
-
 inicio insere_depois_igual_sub 1
+
     1 copiar 5
+
 	5 X [0] i -- 10 X Z i
 	5 X [1] i -- 10 X U i
 	5 X [2] i -- 10 X D i
@@ -938,20 +980,23 @@ inicio insere_depois_igual_sub 1
 	5 X [7] i -- 10 X L i
 	5 X [8] i -- 10 X O i
 	5 X [9] i -- 10 X N i
+
     10 move_fim 15
 	15 X * d -- 16 X * d
     16 colar 20
+
     20 move_inicio_sub 25
     25 procura_numero 30
 	30 X + d -- 1 X * d
 	30 X * d -- 1 X * d
 	30 X * x -- 1 X * d
 	30 X * i -- 1 X * i
+
 fim insere_depois_igual_sub
 
 
-;Bloco para apagar os numeros entre o I e o =
 inicio apaga_i_ate_igual 1
+
     1 move_inicio 5
 
 	5 X I d -- 10 X * d
@@ -964,6 +1009,7 @@ inicio apaga_i_ate_igual 1
 
 	20 X * e -- 21 X * e
 	21 retorne
+
 fim apaga_i_ate_igual
 
 
