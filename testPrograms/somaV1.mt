@@ -4,6 +4,7 @@
 ;   multiplicação.                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 inicio main 1
+
     1 encontra_operacao 5
 	5 X + i -- 10 X * i
 	5 X - i -- 15 X * i
@@ -44,24 +45,77 @@ inicio main 1
 	
     50 transforma_para_numero 55
 
-    55 formatasaida 56
-	56 move_fim 60
-	60 X * d -- 61 X * d
-	61 aceite
+    55 formatasaida 60
+    60 formataentrada 70
+
+
+	90 aceite
+
 fim main
 
+
+inicio formataentrada 1
+
+    1 X _ d -- 2 X _ d
+
+    2 X < d -- 2 X < d
+    2 X 1 d -- 2 X 1 d
+    2 X 2 d -- 2 X 2 d
+    2 X 3 d -- 2 X 3 d
+    2 X 4 d -- 2 X 4 d
+    2 X 5 d -- 2 X 5 d
+    2 X 6 d -- 2 X 6 d
+    2 X 7 d -- 2 X 7 d
+    2 X 8 d -- 2 X 8 d
+    2 X 9 d -- 2 X 9 d
+    2 X 0 d -- 2 X 0 d
+    2 X + d -- 2 X + d
+    2 X - d -- 2 X - d
+
+    2 X = d -- 3 X > d
+    3 X > i -- 4 X _ i
+    3 X * d -- 3 X _ d
+    4 move_inicio_final 5
+    5 retorne
+
+fim formataentrada
+
+
+inicio move_inicio_final 1
+
+    1 X < i -- 2 X * e
+    1 X * e -- 1 X * e
+    2 retorne
+
+fim move_inicio_final
+
+
 inicio formatasaida 1
-    1 X _ e -- 2 X > e
 
+    1 X _ i -- 2 X > i
     2 X _ i -- 3 X < i
-    2 X * e -- 2 Z * e
+    2 X > e -- 2 Z > e
+    2 X 0 e -- 2 Z 0 e
+    2 X 1 e -- 2 Z 1 e
+    2 X 2 e -- 2 Z 2 e
+    2 X 3 e -- 2 Z 3 e
+    2 X 4 e -- 2 Z 4 e
+    2 X 5 e -- 2 Z 5 e
+    2 X 6 e -- 2 Z 6 e
+    2 X 7 e -- 2 Z 7 e
+    2 X 8 e -- 2 Z 8 e
+    2 X 9 e -- 2 Z 9 e
+    2 X < e -- 2 Z < e
+    2 X + e -- 2 Z + e
+    2 X - e -- 2 Z - e
+    2 X = e -- 2 Z = e
 
-    3 X _ i -- 4 X * i
-    3 X * d -- 3 Z * d
-
-
+    3 X < e -- 4 Z < e
     4 retorne
+
 fim formatasaida
+
+
 ; Bloco Responsavel por Realizar o loop de soma e marcar numeros somados
 inicio soma 1
 
@@ -342,44 +396,54 @@ fim transforma_numero_letra
 
 ;bloco para encontrar operação
 inicio encontra_operacao 1
+
 	1 X + d -- 2 X + i
 	1 X - d -- 2 X - i
 	1 X x d -- 2 X x i
 	1 X * d -- 1 X * d
     2 retorne
+
 fim encontra_operacao
 
 
 ;bloco para mover ate o =
 inicio move_ate_igual 1
+
 	1 X = d -- 2 X * i
 	1 X * d -- 1 X * d
 	2 retorne
+
 fim move_ate_igual
 
 
 ;bloco para mover ate o inicio
 inicio move_inicio 1
+
     1 X _ d -- 2 X * d
 	1 X * e -- 1 X * e
 	2 retorne
+
 fim move_inicio
 
 
 ;bloco para mover ate o inicio da operação inteira ou ate o I (indicador para subtracao negativa)
 inicio move_inicio_sub 1
+
     1 X I d -- 2 X * d
 	1 X _ d -- 2 X * d
 	1 X * e -- 1 X * e
 	2 retorne
+
 fim move_inicio_sub
 
 
 ;bloco para mover ate o final da operação
 inicio move_fim 1
+
 	1 X _ e -- 2 X * e
 	1 X * d -- 1 X * d
 	2 retorne
+
 fim move_fim
 
 
@@ -1015,6 +1079,7 @@ fim apaga_i_ate_igual
 
 ; Bloco para remover todos os espacos entre o I e os numeros do resultado
 inicio volta_numeros_ate_i 1
+
     1 move_fim 2
 	2 X * d -- 3 X * d
 	3 X * i -- 4 X X i
@@ -1039,11 +1104,13 @@ inicio volta_numeros_ate_i 1
 	40 X _ e -- 40 X * e
 	40 X I e -- 41 X _ e
 	41 retorne
+
 fim volta_numeros_ate_i
 
 
 ; bloco para apagar todos caracteres apos o =
 inicio apaga_depois_igual 1
+
     1 move_fim 2
 	2 X = i -- 3 X * i
 	2 X * e -- 2 X _ e
@@ -1051,26 +1118,32 @@ inicio apaga_depois_igual 1
     4 transforma_para_numero 5
     5 X * e -- 6 X * e
 	6 retorne
+
 fim apaga_depois_igual
 
 ;bloco para verificar se existe letra I a esquerda
 inicio verifica_i_esquerda 1
+
 	1 X I i -- 2 X I i
 	1 X _ i -- 2 X * i
 	1 X * e -- 1 X * e
 	2 retorne
+
 fim verifica_i_esquerda
 
 
 ; bloco para andar ate o sinal de -
 inicio anda_ate_menos 1
+
 	1 X - i -- 2 X * i
 	1 X * d -- 1 X * d
 	2 retorne
+
 fim anda_ate_menos
 
 
 inicio identifica_maior_length_igual 1
+
 	1 move_inicio 2
     2 transforma_para_numero 3
 	3 X _ e -- 4 X * e
@@ -1244,6 +1317,7 @@ fim identifica_maior_length_igual
 
 ;bloco para inserir o segundo numero depois do =
 inicio insere_segundo_depois_igual 1
+
     1 copiar 5
 	5 X [0] i -- 10 X Z i
 	5 X [1] i -- 10 X U i
@@ -1263,4 +1337,5 @@ inicio insere_segundo_depois_igual 1
     25 procura_numero 30
 	30 X = i -- 1 X * i
 	30 X * i -- 1 X * i
+
 fim insere_segundo_depois_igual
