@@ -1,15 +1,14 @@
 import argparse
 import sys
-
 from memoria import Memoria as m
 
 
 def linhaDeComando():
     linha = sys.argv[1:]
     parser = argparse.ArgumentParser(prog='simuladorMT', description=Interface.msgHelp)
-    parser.add_argument('-step', help='Executa N computações e pausa', type=int, default=1000)
+    parser.add_argument('-steps', help='Executa N computações e pausa', type=int, default=1000)
     parser.add_argument('-resume', help='Executa o programa silenciosamente', action='store_true')
-    parser.add_argument('-debug', help='Executa cada passo detalhadamente', action='store_true')
+    parser.add_argument('-debug', help='Produz um relatório com cada estado computado', type=str, default='')
     parser.add_argument('arquivo', help='nome do arquivo com o código para a máquina de turing')
     parser.add_argument('entrada', help='palavra de entrada para execução do programa')
 
@@ -20,13 +19,13 @@ def linhaDeComando():
 class Interface(object):
     msgHelp = ''
 
-    def __init__(self, arquivo, entrada, head='[]', resume=True, debug=False, step=0):
+    def __init__(self, arquivo, entrada, resume=True, debug=False, steps=0):
         self._arquivo = arquivo
         self._entrada = entrada
         self._resume = resume
         self._debug = debug
-        self._step = step
-        self._head = head
+        self._steps = steps
+        self._head = '[]'
         self.aliases = []
 
     def entrada(self):
@@ -36,14 +35,13 @@ class Interface(object):
         nameSpace['head'] = self._head
         nameSpace['resume'] = self._resume
         nameSpace['debug'] = self._debug
-        nameSpace['step'] = self._step
+        nameSpace['steps'] = self._steps
         nameSpace['blocos'] = self._carregaArquivo()
 
         return nameSpace
 
     def _trataLinha(self, linha):
         pos = linha.find(';')       # Quando o primeiro caracter da linha for 0, é porque ; é a primeira posição
-
         if pos != -1:               # Se por for -1, então a linha é neutralizada
             linha = linha[:pos]
 

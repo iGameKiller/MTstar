@@ -5,42 +5,38 @@ from memoria import *
 class TuringMachine:
     maxPassosSemIntervencao = 1000
 
-    def __init__(self, arquivo, entrada, head='()', resume=True, debug=False, step=0):
-        self.passos = None
-        self.aceita = False
-        self.running = True
-        self.interface = Interface("./testPrograms/somaV1.mt", '93-70=', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+    def __init__(self, arquivo, entrada, resume=True, debug=False, steps=0):
+        self.interface = Interface(arquivo, entrada, resume, debug, steps)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
         self.estado = None
         self.pilhaDeChamada = list()
         self.blocos = None
+        if debug != '':
+            self.log = open(debug, "w")
         return
 
     def carregaPrograma(self):
-
         carga = self.interface.entrada()
         self.entrada = carga['entrada']
         self.resume = carga['resume']
         self.debug = carga['debug']
-        self.step = carga['step']
+        self.steps = carga['steps']
         self.blocos = carga['blocos']
+        if self.debug != '':
+            self.log.write("Relatório de saída:\n\n")
 
     def executa(self):
-
         self.memoriaX.carregaPalavra(self.entrada)
         print("Simulador de Máquina de Turing Suave versão 1.0")
         print("Desenvolvido como trabalho prático para a disciplina de Teoria da Computação")
         print("Autor: João Pedro Mendonça de Souza, IFMG − Formiga, 2022.")
-        print('\nexecutando...\n')
         self.chamada('main', None)
         self.run()
-
         return
 
     def chamada(self, bloco, retorno):
-
         try:
             inicial, comandos = self.blocos[bloco]
         except:
@@ -51,7 +47,6 @@ class TuringMachine:
         self.empilhaChamada(bloco, retorno)
 
     def empilhaChamada(self, bloco, retorno):
-
         if retorno == 'retorne':
             print('Erro... duplo retorno a chamada do bloco %s' % bloco)
             raise SystemExit
@@ -62,8 +57,9 @@ class TuringMachine:
         self.pilhaDeChamada = self.pilhaDeChamada[0:-1]
 
     def run(self):
-
         self.resetaPassos()
+        self.running = True
+        self.aceita = False
 
         while self.running:
             comando = self.buscaComando()
@@ -79,13 +75,11 @@ class TuringMachine:
             print('\nREJEITA.')
 
     def resetaPassos(self):
-
-        if self.step == 0:
-            self.step = TuringMachine.maxPassosSemIntervencao
-        self.passos = self.step
+        if self.steps == 0:
+            self.steps = TuringMachine.maxPassosSemIntervencao
+        self.passos = self.steps
 
     def buscaComando(self):  # uma parte busca comando, a outra executa, esse busca
-
         bloco = self.blocoAtual()
         estado = self.estado
         fita1 = self.memoriaX.leFita1()
@@ -199,7 +193,6 @@ class TuringMachine:
             self.atualizaEstado(alvo)
 
     def atualizaEstado(self, novoEstado):
-
         if novoEstado == 100:
             print("Pare")
 
@@ -218,18 +211,15 @@ class TuringMachine:
             self.terminouExecucao(False)
 
         else:
-
             self.estado = novoEstado
 
         return
 
     def terminouExecucao(self, aceita=False):
-
         self.aceita = aceita
         self.running = False
 
     def debuga(self, c, parada):
-
         interrompeu = False
         while self.passos <= 0:
             interrompeu = True
@@ -256,7 +246,6 @@ class TuringMachine:
                             break
 
             self.steps = self.passos = int(n)
-
             if self.steps == 0:
                 self.terminouExecucao(False)
                 return
@@ -283,15 +272,20 @@ class TuringMachine:
         linhaZ += self.montaLinha()
         linhaZ = linhaZ + str(self.memoriaZ)
 
+        if not self.resume:
+            print(linhaX, ' | ', c)
+            print(linhaY, ' |')
+            print(linhaZ, ' | \n')
 
-        print(linhaX, ' | ', c)
-        print(linhaY, ' |')
-        print(linhaZ, ' | \n')
+        if self.debug != '':
+            self.log.write(linhaX + ' | ' + str(c) + '\n')
+            self.log.write(linhaY + '\n')
+            self.log.write(linhaZ + '\n\n')
 
         self.passos = int(self.passos) - 1
 
     def numComandoExecutado(self):
-        n = self.step
+        n = self.steps
         if n == 0:
             n = TuringMachine.maxPassosSemIntervencao
         n = n - self.passos + 1
@@ -305,13 +299,12 @@ class TuringMachine:
 
 
 if __name__ == '__main__':
-    # parametros = vars(linhaDeComando())    # Requisito 4
-    # print("Parâmetros passados: ", parametros)
-    MT = TuringMachine("", "")
+    parametros = vars(linhaDeComando())    # Requisito 4
+    print("Parâmetros passados: ", parametros)
+    MT = TuringMachine(**parametros)
     MT.carregaPrograma()
     MT.executa()
     print("FIM DA SIMULAÇÃO")
 
     # TODO: Criar Aliases
-    # TODO: Fornecer um log de saída contendo os estados computados
-    # TODO: Testar código.MT que utiliza chamadas de função
+    # TODO: Implementar breakpoints
