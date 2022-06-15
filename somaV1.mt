@@ -1,8 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;   No bloco main, inicia-se a aplicação, então a primeira coisa a se fazer é   ;
 ;   verificar qual operação está sendo feita, + para soma, - para sub e x para  ;
-;   multiplicação.                                                               ;
+;   multiplicação.                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 inicio main 1
 
     1 encontra_operacao 5
@@ -70,11 +71,13 @@ inicio formataentrada 1
     2 X + d -- 2 X + d
     2 X - d -- 2 X - d
 
-    2 X = d -- 3 X > d
-    3 X > i -- 4 X _ i
-    3 X * d -- 3 X _ d
-    4 move_inicio_final 5
-    5 retorne
+    2 X = d -- 3 X = d
+    3 X * d -- 4 X _ d
+
+    4 X > i -- 5 X _ i
+    4 X * d -- 4 X _ d
+    5 move_inicio_final 6
+    6 retorne
 
 fim formataentrada
 
@@ -82,8 +85,15 @@ fim formataentrada
 inicio move_inicio_final 1
 
     1 X < i -- 2 X * e
+    1 X _ e -- 1 X _ e
+    1 X = d -- 2 X = d
     1 X * e -- 1 X * e
-    2 retorne
+
+    2 X * i -- 3 X > i
+
+    3 X _ i -- 4 X * i
+    3 X * e -- 3 X * e
+    4 retorne
 
 fim move_inicio_final
 

@@ -224,12 +224,7 @@ class TuringMachine:
         while self.passos <= 0:
             interrompeu = True
 
-            print(
-                '\nEste programa executou %d computações.' % self.steps +
-                '\nDeseja continuar?' +
-                '\nDigite um inteiro para mais n passos.' +
-                '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao
-            )
+            print('\nEste programa executou %d computações.' % self.steps + '\nDeseja continuar?' +'\nDigite um inteiro para mais n passos.' + '\n(0 = stop, %d = max) ' % TuringMachine.maxPassosSemIntervencao)
 
             while True:
                 try:
@@ -299,12 +294,20 @@ class TuringMachine:
 
 
 if __name__ == '__main__':
-    parametros = vars(linhaDeComando())    # Requisito 4
+    parametros = vars(linhaDeComando())
     print("Parâmetros passados: ", parametros)
     MT = TuringMachine(**parametros)
     MT.carregaPrograma()
     MT.executa()
     print("FIM DA SIMULAÇÃO")
+
+    # O padrão de invocação é: simuladorMT.py [-h] [-step STEP] [-resume] [-debug] arquivo entrada
+    # Alguns possíveis comandos para invocar a Máquina de Turing são:
+    # python3 simuladorMT.py --help                             |   mostra como a linha de comando funciona
+    # python3 simuladorMT.py --debug log.txt somaV1.mt 10+10=   |   mostra a execução passo a passo no console e a registra no arquivo
+    # python3 simuladorMT.py --resume somaV1.mt 10+10=          |   mostra apenas o resultado final e é a opção padrão caso nenhuma seja selecionada
+    # python3 simuladorMT.py --steps 50 somaV1.mt 10+10=        |   executa 50 passos e pergunta pro usuario quantas computações fazer
+
 
     # TODO: Criar Aliases
     # TODO: Implementar breakpoints
