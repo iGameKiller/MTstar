@@ -47,9 +47,7 @@ inicio main 1
 
     55 formatasaida 60
     60 formataentrada 70
-
-
-	90 aceite
+	70 aceite
 
 fim main
 
@@ -1051,10 +1049,11 @@ inicio insere_depois_igual_sub 1
 
     20 move_inicio_sub 25
     25 procura_numero 30
-	30 X + d -- 1 X * d
-	30 X * d -- 1 X * d
-	30 X * x -- 1 X * d
+	30 X + d -- 31 X * d
+	30 X - d -- 31 X * d
+	30 X x d -- 31 X * d
 	30 X * i -- 1 X * i
+	31 retorne
 
 fim insere_depois_igual_sub
 

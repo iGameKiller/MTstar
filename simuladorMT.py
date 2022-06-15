@@ -9,7 +9,7 @@ class TuringMachine:
         self.passos = None
         self.aceita = False
         self.running = True
-        self.interface = Interface("./testPrograms/somaV1.mt", '10+10=', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
+        self.interface = Interface("./testPrograms/somaV1.mt", '93-70=', head, False, True, 0)  # Interface(arquivo, entrada, resume, debug, step)
         self.memoriaX = Memoria('Fita X')
         self.memoriaY = Memoria('Fita Y')
         self.memoriaZ = Memoria('Fita Z')
@@ -36,6 +36,7 @@ class TuringMachine:
         print('\nexecutando...\n')
         self.chamada('main', None)
         self.run()
+
         return
 
     def chamada(self, bloco, retorno):
@@ -69,6 +70,7 @@ class TuringMachine:
             self.executaComando(comando)
 
         if self.aceita:
+            print("Configuração Instantânea Final")
             self.memoriaX.dump()
             self.memoriaY.dump()
             self.memoriaZ.dump()
@@ -280,6 +282,7 @@ class TuringMachine:
         linhaZ = 'Fita Z: '
         linhaZ += self.montaLinha()
         linhaZ = linhaZ + str(self.memoriaZ)
+
 
         print(linhaX, ' | ', c)
         print(linhaY, ' |')
