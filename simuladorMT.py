@@ -1,3 +1,10 @@
+##################################################
+##      MTStar - Máquina de Turing Doravante    ##
+##      João Pedro Mendonça de Souza - 0035330  ##
+##      Teoria da Computação - 2022             ##
+###################################################
+
+
 from interface import *
 from memoria import *
 
@@ -295,7 +302,6 @@ class TuringMachine:
 
 if __name__ == '__main__':
     parametros = vars(linhaDeComando())
-    print("Parâmetros passados: ", parametros)
     MT = TuringMachine(**parametros)
     MT.carregaPrograma()
     MT.executa()
@@ -303,11 +309,7 @@ if __name__ == '__main__':
 
     # O padrão de invocação é: simuladorMT.py [-h] [-step STEP] [-resume] [-debug] arquivo entrada
     # Alguns possíveis comandos para invocar a Máquina de Turing são:
-    # python3 simuladorMT.py --help                             |   mostra como a linha de comando funciona
-    # python3 simuladorMT.py --debug log.txt somaV1.mt 10+10=   |   mostra a execução passo a passo no console e a registra no arquivo
-    # python3 simuladorMT.py --resume somaV1.mt 10+10=          |   mostra apenas o resultado final e é a opção padrão caso nenhuma seja selecionada
-    # python3 simuladorMT.py --steps 50 somaV1.mt 10+10=        |   executa 50 passos e pergunta pro usuario quantas computações fazer
-
-
-    # TODO: Criar Aliases
-    # TODO: Implementar breakpoints
+    # python3 simuladorMT.py -help                             |   mostra como a linha de comando funciona
+    # python3 simuladorMT.py -debug log.txt somaV1.mt 10+10=   |   mostra a execução passo a passo no console e a registra no arquivo
+    # python3 simuladorMT.py -resume somaV1.mt 10+10=          |   mostra apenas o resultado final e é a opção padrão caso nenhuma seja selecionada
+    # python3 simuladorMT.py -steps 50 somaV1.mt 10+10=        |   executa 50 passos e pergunta pro usuario quantas computações fazer, esse número pode variar de 1 até 1000

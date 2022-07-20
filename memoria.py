@@ -1,3 +1,10 @@
+##################################################
+##      MTStar - Máquina de Turing Doravante    ##
+##      João Pedro Mendonça de Souza - 0035330  ##
+##      Teoria da Computação - 2022             ##
+###################################################
+
+
 class Memoria(object):
     simboloBranco = '_'
 

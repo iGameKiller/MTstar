@@ -1,3 +1,10 @@
+##################################################
+##      MTStar - Máquina de Turing Doravante    ##
+##      João Pedro Mendonça de Souza - 0035330  ##
+##      Teoria da Computação - 2022             ##
+###################################################
+
+
 import argparse
 import sys
 from memoria import Memoria as m
@@ -80,11 +87,13 @@ class Interface(object):
         else:
             parada = False
 
-        if linha[1] == '=' and len(linha) == 3:
+        if '$' in linha[0]:
             alias = linha[0]
             string = linha[2]
-
+            string.split()
+            string = string[1:-1]
             self.aliases.append((alias, string))
+            return
 
         if linha[0] == 'inicio' and len(linha) == 3:
             inicio, nomeBloco, estInicial = linha
@@ -126,6 +135,8 @@ class Interface(object):
             else:
                 print('Error... ill-formed command: %s' % linha)
             return
+
+
     def _temEstado(self, linha):
         n = linha[0]
         try:
