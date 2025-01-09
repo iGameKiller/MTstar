@@ -25,8 +25,6 @@ O projeto inclui uma interface visual minimalista e manual para que o usuário a
 
 ## Requisitos
 - Linguagem de programação utilizada: **[Python]**.
-- Dependências:
-  - **[Insira dependências, ex.: NumPy, curses, etc.]**
 
 ## Como Usar
 ### 1. Clonar o repositório
@@ -37,8 +35,13 @@ $ cd simulador-mt
 
 ### 2. Executar o programa
 Para iniciar o simulador, use o seguinte comando:
-```bash
-$ [comando para rodar, ex.: python simulador.py]
+```plaintext
+  O padrão de invocação é: simuladorMT.py [-h] [-step STEP] [-resume] [-debug] arquivo entrada
+  Alguns possíveis comandos para invocar a Máquina de Turing são:
+  python3 simuladorMT.py -help                             |   mostra como a linha de comando funciona
+  python3 simuladorMT.py -debug log.txt somaV1.mt 10+10=   |   mostra a execução passo a passo no console e a registra no arquivo
+  python3 simuladorMT.py -resume somaV1.mt 10+10=          |   mostra apenas o resultado final e é a opção padrão caso nenhuma seja selecionada
+  python3 simuladorMT.py -steps 50 somaV1.mt 10+10=        |   executa 50 passos e pergunta pro usuario quantas computações fazer, esse número pode variar de 1 até 1000
 ```
 
 ### 3. Inserir os dados de entrada
@@ -53,39 +56,32 @@ Acompanhe a execução do programa, vendo:
 ### 5. Testar outros programas
 Sinta-se à vontade para criar e testar seus próprios programas de Máquina de Turing, modificando o arquivo de configurações de transições.
 
-## Estrutura do Projeto
-```plaintext
-.
-├── src/                 # Código-fonte principal do simulador
-├── examples/            # Exemplos de programas para a MT
-├── docs/                # Documentação complementar
-├── tests/               # Testes unitários
-└── README.md            # Este arquivo
-```
 
 ## Demonstração
 Abaixo, um exemplo de saída do simulador ao executar o programa de soma:
 ```plaintext
-Fita 1: 101+110
-Fita 2: ____
-Fita 3: 1011
-Estado Atual: q_accept
+                                                       ....             
+                                              425 passos anteriores
+                                              
+Fita X: 426 move_inicio_final.0003 : ____________________[<]1641-5674=>_________ : T | ['fita1', '3', 'X', '*', 'e', '3', 'X', '*', 'e']
+Fita Y: 426 move_inicio_final.0003 : ____________________[_]____________________ : _
+Fita Z: 426 move_inicio_final.0003 : ____________________[_]<1641-5674=-4033>___ : _
+
+Fita X: 427 move_inicio_final.0003 : ____________________[_]<1641-5674=>________ : T | ['fita1', '3', 'X', ' ', 'i', '4', 'X', '*', 'i']
+Fita Y: 427 move_inicio_final.0003 : ____________________[_]____________________ : _
+Fita Z: 427 move_inicio_final.0003 : ____________________[_]<1641-5674=-4033>___ : _
+
+Fita X: 428 move_inicio_final.0004 : ____________________[_]<1641-5674=>________ : T | ['final', '4', 'retorne']
+Fita Y: 428 move_inicio_final.0004 : ____________________[_]____________________ : _
+Fita Z: 428 move_inicio_final.0004 : ____________________[_]<1641-5674=-4033>___ : _
+
+Fita X: 429 .formataentrada.0006 : ____________________[_]<1641-5674=>________ : T | ['final', '6', 'retorne']
+Fita Y: 429 .formataentrada.0006 : ____________________[_]____________________ : _
+Fita Z: 429 .formataentrada.0006 : ____________________[_]<1641-5674=-4033>___ : _
+
+Fita X: 430 ...........main.0070 : ____________________[_]<1641-5674=>________ : T | ['final', '70', 'aceite']
+Fita Y: 430 ...........main.0070 : ____________________[_]____________________ : _
+Fita Z: 430 ...........main.0070 : ____________________[_]<1641-5674=-4033>___ : _
+
 ```
-
-## Contribuição
-Contribuições são bem-vindas! Siga os passos abaixo para contribuir com o projeto:
-1. Faça um fork do repositório.
-2. Crie uma nova branch com sua feature/bugfix.
-3. Envie um pull request com suas alterações.
-
-## Licença
-Este projeto é licenciado sob a [MIT License](LICENSE).
-
-## Agradecimentos
-- Aos professores e colegas da disciplina de Teoria da Computação por todo o suporte e aprendizado.
-- À comunidade de código aberto pelas ferramentas e inspiração.
-
----
-
-Explore, experimente e divirta-se com este simulador de Máquina de Turing! 🚀
 
